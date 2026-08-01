@@ -4,6 +4,8 @@ import Button from "../compnents/SharedUIComp/Button";
 import ProgressBar from "../compnents/SharedUIComp/Progressbar";
 import Line from "../compnents/SharedUIComp/Line";
 import Card from "../compnents/SharedUIComp/Card";
+import ApplyIcon from "../assets/images/lll.svg";
+import SendotpIcon from "../assets/images/sendotp.svg";
 
 export function HomeScreen() {
     return (
@@ -11,7 +13,6 @@ export function HomeScreen() {
 
             <Card
                 style={{
-                    width: "90%",
                     alignItems: "center",
                     padding: 30,
                 }}
@@ -57,6 +58,21 @@ export function HomeScreen() {
                         title="Logout"
                         onPress={() => console.log("Logout")}
                     />
+                    <Button
+                        variant="imageAction"
+                        title="New Application"
+                        image={ApplyIcon}
+                        onPress={() => console.log("Continue Application")}
+                        style={{ marginBottom: 14, width: "90%" }}
+                    />
+                    <Button
+                        variant="imageAction"
+                        title="Send OTP"
+                        image={SendotpIcon}
+                        onPress={() => console.log("Send OTP")}
+                        style={{ marginBottom: 14, width: "67%" }}
+                    />
+
                 </View>
 
                 <Line color="#059669" thickness={2} />

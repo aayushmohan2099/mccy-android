@@ -1,8 +1,9 @@
-
 import React from "react";
 import {
     TouchableOpacity,
     Text,
+    View,
+    Image,
     ActivityIndicator,
     StyleSheet,
 } from "react-native";
@@ -15,6 +16,9 @@ export default function Button({
     loading = false,
     leftIcon,
     rightIcon,
+    image,
+    imageStyle,
+    svgIconProps,
     style,
     textStyle,
 }) {
@@ -27,6 +31,7 @@ export default function Button({
         "secondary",
         "outline",
         "danger",
+        "imageAction",
     ].includes(variant)
         ? variant
         : "default";
@@ -80,9 +85,29 @@ export default function Button({
             loader: "#ffffff",
             loadingText: "Deleting...",
         },
+
+        // ---------------- IMAGE ACTION ----------------
+        // Dark pill button with an image/icon chip on the left,
+        // bold white label, and a chevron on the right.
+        // Pass `image` as either a require(...)/{ uri } source (PNG/JPG)
+        // OR an imported .svg component (react-native-svg-transformer) —
+        // both work through the same prop.
+        imageAction: {
+            button: styles.imageActionButton,
+            text: styles.imageActionText,
+            loader: "#ffffff",
+            loadingText: "Please wait...",
+        },
     };
 
     const current = variantStyles[buttonVariant];
+    const isImageVariant = buttonVariant === "imageAction";
+
+    // SVGs imported via react-native-svg-transformer come in as a
+    // component (a function), not a source object/number like PNGs do.
+    // JSX requires a capitalized reference to render a variable as a tag,
+    // so we alias it here before using it below.
+    const SvgComponent = typeof image === "function" ? image : null;
 
     return (
         <TouchableOpacity
@@ -101,6 +126,30 @@ export default function Button({
                     <Text style={[current.text, textStyle]}>
                         {current.loadingText}
                     </Text>
+                </>
+            ) : isImageVariant ? (
+                <>
+                    <View style={styles.imageChip}>
+                        {SvgComponent ? (
+                            <SvgComponent width={40} height={40} {...svgIconProps} />
+                        ) : image ? (
+                            <Image
+                                source={image}
+                                style={[styles.image, imageStyle]}
+                                resizeMode="cover"
+                            />
+                        ) : null}
+                    </View>
+
+                    <Text
+                        style={[current.text, textStyle]}
+                        numberOfLines={1}
+                        ellipsizeMode="tail"
+                    >
+                        {title}
+                    </Text>
+
+                    <Text style={styles.chevron}>{rightIcon || "\u203A"}</Text>
                 </>
             ) : (
                 <>
@@ -242,6 +291,45 @@ const styles = StyleSheet.create({
     dangerText: {
         color: "#FFFFFF",
         fontSize: 16,
+        fontWeight: "700",
+    },
+
+    // ---------------- IMAGE ACTION ----------------
+    imageActionButton: {
+        backgroundColor: "#2C3253",
+        borderRadius: 10,
+        height: 52,
+        width: "100%",
+        flexDirection: "row",
+        alignItems: "center",
+        overflow: "hidden",
+    },
+
+    imageActionText: {
+        color: "#FFFFFF",
+        fontSize: 25,
+        fontWeight: "600",
+        marginLeft: 16,
+        marginRight: 10,
+    },
+
+    imageChip: {
+        width: 48,
+        height: 52,
+        backgroundColor: "#F3ECD9",
+        alignItems: "center",
+        justifyContent: "center",
+        overflow: "hidden",
+    },
+
+    image: {
+        width: "100%",
+        height: "100%",
+    },
+
+    chevron: {
+        color: "#fff",
+        fontSize: 40,
         fontWeight: "700",
     },
 

@@ -184,12 +184,11 @@ function AppContent() {
       <View style={styles.screenContainer}>
         {activeTab === 'register' && (
           authStep === 'mobile' ? (
-            <HomeScreen />
-            // <MobileRegisterScreen
-
-            //   onOtpSent={handleOtpSent}
-            //   setRegisteredMobile={setRegisteredMobile}
-            // />
+            // <HomeScreen />
+            <MobileRegisterScreen
+              onOtpSent={handleOtpSent}
+              setRegisteredMobile={setRegisteredMobile}
+            />
           ) : authStep === 'otp' ? (
             <OtpVerifyScreen
               mobileNumber={registeredMobile}
