@@ -190,7 +190,7 @@ export function DocumentUploadScreen({ applicationForm = {}, onSubmitFinal, onBa
 }
 
 const styles = StyleSheet.create({
-    safeArea: { flex: 1, backgroundColor: "#f8fafc" },
+    safeArea: { flex: 1 },
     container: { flex: 1 },
     scrollContent: { padding: 16, paddingBottom: 40, gap: 16 },
     topBarRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 4 },

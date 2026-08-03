@@ -179,7 +179,7 @@ export function SHGAndMemberSelectionScreen({ locationData = {}, initialSelectio
 }
 
 const styles = StyleSheet.create({
-    safeArea: { flex: 1, backgroundColor: "#f8fafc" },
+    safeArea: { flex: 1 },
     scrollContent: { padding: 24, paddingBottom: 40, gap: 20 },
     topBarRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 4 },
     backButtonContainer: { flexDirection: "row", alignItems: "center", backgroundColor: "#e2e8f0", paddingHorizontal: 10, paddingVertical: 6, borderRadius: 8, gap: 6 },
@@ -188,21 +188,21 @@ const styles = StyleSheet.create({
     badge: { backgroundColor: "#fef3c7", borderColor: "#fcd34d", borderWidth: 1, paddingHorizontal: 10, paddingVertical: 4, borderRadius: 6 },
     badgeText: { color: "#78350f", fontSize: 12, fontWeight: "700", fontFamily: Platform.OS === "ios" ? "Courier" : "monospace" },
     titleContainer: { gap: 4 },
-    title: { fontSize: 20, fontWeight: "800", color: "#0f172a", letterSpacing: -0.5 },
-    description: { fontSize: 12, color: "#475569", lineHeight: 18 },
+    title: { fontSize: 30, fontWeight: "800", color: "#0f172a", letterSpacing: -0.5 },
+    description: { fontSize: 17, color: "#475569", lineHeight: 18 },
     boldText: { fontWeight: "700", color: "#0f172a" },
     card: { backgroundColor: "#ffffff", padding: 20, borderRadius: 16, borderColor: "#e2e8f0", borderWidth: 1, shadowColor: "#000", shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.05, shadowRadius: 2, elevation: 2, gap: 20 },
     sectionGroup: { gap: 8 },
-    label: { fontSize: 12, fontWeight: "700", color: "#1e293b" },
+    label: { fontSize: 18, fontWeight: "700", color: "#1e293b" },
     dropdownList: { maxHeight: 150, backgroundColor: "#f8fafc", borderWidth: 1, borderColor: "#cbd5e1", borderRadius: 10 },
     dropdownItem: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingVertical: 12, paddingHorizontal: 14, borderBottomWidth: 1, borderBottomColor: "#f1f5f9" },
     dropdownItemSelected: { backgroundColor: "#ecfdf5", borderColor: "#059669" },
-    dropdownItemText: { fontSize: 13, color: "#334155", fontWeight: "500" },
+    dropdownItemText: { fontSize: 17, color: "#334155", fontWeight: "500" },
     dropdownItemTextSelected: { color: "#047857", fontWeight: "700" },
-    subCodeText: { fontSize: 10, color: "#64748b", fontFamily: Platform.OS === "ios" ? "Courier" : "monospace" },
+    subCodeText: { fontSize: 12, color: "#64748b", fontFamily: Platform.OS === "ios" ? "Courier" : "monospace" },
     checkMark: { fontSize: 14, fontWeight: "bold", color: "#059669" },
     summaryBox: { backgroundColor: "#fffbeb", borderColor: "#fde68a", borderWidth: 1, padding: 12, borderRadius: 12, gap: 4 },
-    summaryTitle: { fontSize: 11, fontWeight: "700", color: "#451a03", textTransform: "uppercase" },
-    summaryText: { fontSize: 12, fontWeight: "600", color: "#92400e" },
+    summaryTitle: { fontSize: 17, fontWeight: "700", color: "#451a03", textTransform: "uppercase" },
+    summaryText: { fontSize: 17, fontWeight: "600", color: "#92400e" },
     footerContainer: { padding: 16, backgroundColor: "#ffffff", borderTopWidth: 1, borderTopColor: "#e2e8f0" }
 });

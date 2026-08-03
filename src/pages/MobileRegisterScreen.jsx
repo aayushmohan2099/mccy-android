@@ -21,6 +21,9 @@ export function MobileRegisterScreen({ onOtpSent, setRegisteredMobile }) {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
+
+
+
   const handleMobileChange = val => {
     const cleanedVal = val.replace(/\D/g, '');
     if (cleanedVal.length <= 10) {

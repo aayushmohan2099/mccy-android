@@ -21,6 +21,7 @@ export default function Button({
     svgIconProps,
     style,
     textStyle,
+
 }) {
 
     // Default variant if nothing or invalid is passed

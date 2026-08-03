@@ -232,7 +232,7 @@ export function ApplicationFormScreen({ currentUser, initialDraft, onProceedToUp
 }
 
 const styles = StyleSheet.create({
-    safeArea: { flex: 1, backgroundColor: "#f8fafc" },
+    safeArea: { flex: 1 },
     container: { flex: 1 },
     scrollContent: { padding: 16, paddingBottom: 40, gap: 16 },
     headerArea: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 },

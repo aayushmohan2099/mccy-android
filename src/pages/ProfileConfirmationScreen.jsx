@@ -28,7 +28,7 @@ export function ProfileConfirmationScreen({ profileData = {}, onConfirmCreate, o
                             <Text style={styles.backButtonText}>Back</Text>
                         </TouchableOpacity>
                     )}
-                    <View style={styles.badge}><Text style={styles.badgeText}>Stage 1.3.7</Text></View>
+                    {/* <View style={styles.badge}><Text style={styles.badgeText}>Stage 1.3.7</Text></View> */}
                 </View>
 
                 {/* Header Information */}
@@ -77,12 +77,12 @@ export function ProfileConfirmationScreen({ profileData = {}, onConfirmCreate, o
                     </View>
                 </View>
 
-                {/* Info Note */}
+                {/* Info Note
                 <View style={styles.infoBanner}>
                     <Text style={styles.infoBannerText}>
                         <Text style={styles.boldText}>Note:</Text> Once confirmed, your primary profile will be registered, and you can proceed to track live status or submit fresh applications.
                     </Text>
-                </View>
+                </View> */}
 
             </ScrollView>
 
@@ -101,7 +101,7 @@ export function ProfileConfirmationScreen({ profileData = {}, onConfirmCreate, o
 }
 
 const styles = StyleSheet.create({
-    safeArea: { flex: 1, backgroundColor: "#f8fafc" },
+    safeArea: { flex: 1 },
     scrollContent: { padding: 24, paddingBottom: 40, gap: 20 },
     topBarRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 4 },
     backButtonContainer: { flexDirection: "row", alignItems: "center", backgroundColor: "#e2e8f0", paddingHorizontal: 10, paddingVertical: 6, borderRadius: 8, gap: 6 },
@@ -110,15 +110,15 @@ const styles = StyleSheet.create({
     badge: { backgroundColor: "#fef3c7", borderColor: "#fcd34d", borderWidth: 1, paddingHorizontal: 10, paddingVertical: 4, borderRadius: 6 },
     badgeText: { color: "#78350f", fontSize: 12, fontWeight: "700", fontFamily: Platform.OS === "ios" ? "Courier" : "monospace" },
     titleContainer: { gap: 4 },
-    title: { fontSize: 20, fontWeight: "800", color: "#0f172a", letterSpacing: -0.5 },
-    description: { fontSize: 12, color: "#475569", lineHeight: 18 },
+    title: { fontSize: 30, fontWeight: "800", color: "#0f172a", letterSpacing: -0.5 },
+    description: { fontSize: 17, color: "#000000", lineHeight: 18 },
     card: { backgroundColor: "#ffffff", padding: 20, borderRadius: 16, borderColor: "#e2e8f0", borderWidth: 1, shadowColor: "#000", shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.05, shadowRadius: 2, elevation: 2, gap: 14 },
     cardHeaderRow: { flexDirection: "row", alignItems: "center", gap: 8, borderBottomWidth: 1, borderBottomColor: "#f1f5f9", paddingBottom: 10, marginBottom: 4 },
-    cardHeaderIcon: { fontSize: 16 },
-    cardHeaderText: { fontSize: 13, fontWeight: "700", color: "#1e293b", textTransform: "uppercase" },
+    cardHeaderIcon: { fontSize: 18 },
+    cardHeaderText: { fontSize: 21, fontWeight: "700", color: "#1e293b", textTransform: "uppercase" },
     detailRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingVertical: 6, borderBottomWidth: 1, borderBottomColor: "#f8fafc" },
-    detailLabel: { fontSize: 12, color: "#64748b", fontWeight: "600" },
-    detailValue: { fontSize: 13, color: "#0f172a", fontWeight: "700" },
+    detailLabel: { fontSize: 18, color: "#64748b", fontWeight: "600" },
+    detailValue: { fontSize: 18, color: "#0f172a", fontWeight: "700" },
     fontMono: { fontFamily: Platform.OS === "ios" ? "Courier" : "monospace" },
     boldText: { fontWeight: "800", color: "#059669" },
     infoBanner: { backgroundColor: "#fffbeb", borderColor: "#fde68a", borderWidth: 1, padding: 12, borderRadius: 12 },
