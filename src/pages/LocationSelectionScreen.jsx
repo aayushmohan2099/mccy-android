@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CustomButton } from "../compnents/SharedUIComp/CustomButton";
+import Card from "../compnents/SharedUIComp/Card";
 
 // --- Mock Cascading Data Hierarchy ---
 const LOCATION_HIERARCHY = [
@@ -100,15 +101,26 @@ export function LocationSelectionScreen({ initialData = {}, onProceedToForm, onB
                 </View>
 
                 {/* Header Information */}
-                <View style={styles.titleContainer}>
-                    <Text style={styles.title}>Select Jurisdiction</Text>
-                    <Text style={styles.description}>
-                        Choose your administrative District, Block, and Panchayat from the dropdown selectors below.
-                    </Text>
-                </View>
+                <Card
+                    style={{
+                        alignItems: 'center',
+                        padding: 30,
+                    }}>
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.title}>Select Jurisdiction</Text>
+                        <Text style={styles.description}>
+                            Choose your administrative District, Block, and Panchayat from the dropdown selectors below.
+                        </Text>
+                    </View>
+                </Card>
 
                 {/* Dropdown Lists Card Container */}
                 <View style={styles.card}>
+                    {/* <Card
+                        style={{
+                            alignItems: 'center',
+                            padding: 30,
+                        }}> */}
 
                     {/* 1. District Dropdown List */}
                     <View style={styles.sectionGroup}>
@@ -188,6 +200,7 @@ export function LocationSelectionScreen({ initialData = {}, onProceedToForm, onB
                     </View>
 
                 </View>
+                {/* </Card> */}
             </ScrollView>
 
             {/* Footer Proceed Button */}
@@ -198,12 +211,12 @@ export function LocationSelectionScreen({ initialData = {}, onProceedToForm, onB
                     rightArrow={true}
                 />
             </View>
-        </SafeAreaView>
+        </SafeAreaView >
     );
 }
 
 const styles = StyleSheet.create({
-    safeArea: { flex: 1, backgroundColor: "#f8fafc" },
+    safeArea: { flex: 1 },
     scrollContent: { padding: 24, paddingBottom: 40, gap: 20 },
     topBarRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 4 },
     backButtonContainer: { flexDirection: "row", alignItems: "center", backgroundColor: "#e2e8f0", paddingHorizontal: 10, paddingVertical: 6, borderRadius: 8, gap: 6 },

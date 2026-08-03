@@ -8,9 +8,13 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+
   SafeAreaView,
 } from 'react-native';
 import { CustomButton } from '../compnents/SharedUIComp/CustomButton';
+import Card from '../compnents/SharedUIComp/Card';
+import LoginIcon from '../assets/images/login.svg';
+import Button from '../compnents/SharedUIComp/Button';
 
 export function OtpVerifyScreen({
   mobileNumber,
@@ -71,10 +75,20 @@ export function OtpVerifyScreen({
         enteredOtp.length === 4
       ) {
         if (onOtpVerified) {
-          onOtpVerified({
-            mobile: mobileNumber || '9876543210',
-            verifiedAt: new Date().toISOString(),
-          });
+          // Special mobile number
+          if (mobileNumber === '9984988066') {
+            onOtpVerified({
+              mobile: mobileNumber,
+              verifiedAt: new Date().toISOString(),
+              userType: 'SPECIAL',
+            });
+          } else {
+            onOtpVerified({
+              mobile: mobileNumber,
+              verifiedAt: new Date().toISOString(),
+              userType: 'NORMAL',
+            });
+          }
         }
       } else {
         setErrorMessage('Invalid OTP code. Please use demo code: 1234');
@@ -91,7 +105,10 @@ export function OtpVerifyScreen({
   };
 
   return (
+
+
     <SafeAreaView style={styles.safeArea}>
+
       <KeyboardAvoidingView
         style={styles.container}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -102,15 +119,24 @@ export function OtpVerifyScreen({
           keyboardShouldPersistTaps="handled"
         >
           <View style={styles.contentSpacing}>
-            <View style={styles.titleContainer}>
-              <Text style={styles.title}>Enter OTP Code</Text>
-              <Text style={styles.description}>
-                4-digit verification code sent to{' '}
-                <Text style={styles.descriptionBold}>
-                  +91 {mobileNumber || '9876543210'}
+            <Card
+              style={{
+                alignItems: 'center',
+                padding: 30,
+              }}
+            >
+              <View style={styles.cardContent}>
+                <Text style={styles.title}>Enter OTP Code</Text>
+                <Text style={styles.description}>
+                  4-digit verification code sent to{' '}
+                  <Text style={styles.descriptionBold}>
+                    +91 {mobileNumber || '9876543210'}
+                  </Text>
                 </Text>
-              </Text>
-            </View>
+              </View>
+            </Card>
+
+
 
             <View style={styles.demoBanner}>
               <View style={styles.demoBannerLeft}>
@@ -119,6 +145,7 @@ export function OtpVerifyScreen({
                   Demo Test OTP: <Text style={styles.demoCodeText}>1234</Text>
                 </Text>
               </View>
+
               <TouchableOpacity
                 onPress={() => setOtpValues(['1', '2', '3', '4'])}
                 style={styles.autoFillButton}
@@ -127,100 +154,120 @@ export function OtpVerifyScreen({
                 <Text style={styles.autoFillButtonText}>Auto-fill</Text>
               </TouchableOpacity>
             </View>
+            <Card
+              style={{
+                alignItems: 'center',
+                padding: 30,
+                // paddingVertical: 100,
+                // paddingHorizontal: 100,
+                // margintop: 100,
+              }}>
 
-            <View style={styles.card}>
-              <View style={styles.inputGroup}>
-                <Text style={styles.label}>
-                  Enter 4-Digit One Time Password
-                </Text>
-                <View style={styles.otpContainer}>
-                  {otpValues.map((digit, idx) => (
-                    <TextInput
-                      key={idx}
-                      ref={inputRefs[idx]}
-                      value={digit}
-                      onChangeText={val => handleChangeText(idx, val)}
-                      onKeyPress={e => handleKeyPress(idx, e)}
-                      keyboardType="numeric"
-                      maxLength={1}
-                      selectTextOnFocus
+              <View style={styles.cardContent}>
+                <View style={styles.inputGroup}>
+                  <Text style={styles.label}>
+                    Enter 4-Digit One Time Password
+                  </Text>
+                  <View style={styles.otpContainer}>
+                    {otpValues.map((digit, idx) => (
+                      <TextInput
+                        key={idx}
+                        ref={inputRefs[idx]}
+                        value={digit}
+                        onChangeText={val => handleChangeText(idx, val)}
+                        onKeyPress={e => handleKeyPress(idx, e)}
+                        keyboardType="numeric"
+                        maxLength={1}
+                        selectTextOnFocus
+                        style={[
+                          styles.otpInput,
+                          digit ? styles.otpInputActive : null,
+                        ]}
+                      />
+                    ))}
+                  </View>
+                </View>
+
+                {errorMessage ? (
+                  <View style={styles.errorBanner}>
+                    <Text style={styles.errorIcon}>⚠️</Text>
+                    <Text style={styles.errorText}>{errorMessage}</Text>
+                  </View>
+                ) : null}
+
+                <View style={styles.resendRow}>
+                  <Text style={styles.resendLabel}>Didn't receive code?</Text>
+                  <TouchableOpacity
+                    onPress={handleResend}
+                    disabled={!canResend}
+                    style={styles.resendButtonContainer}
+                    activeOpacity={0.7}
+                  >
+                    <Text
                       style={[
-                        styles.otpInput,
-                        digit ? styles.otpInputActive : null,
+                        styles.refreshIcon,
+                        canResend
+                          ? styles.refreshIconActive
+                          : styles.refreshIconDisabled,
                       ]}
-                    />
-                  ))}
+                    >
+                      ↻
+                    </Text>
+                    <Text
+                      style={[
+                        styles.resendButtonText,
+                        !canResend && styles.resendButtonTextDisabled,
+                      ]}
+                    >
+                      {canResend ? 'Resend OTP' : `Resend in ${coolDownTimer}s`}
+                    </Text>
+                  </TouchableOpacity>
                 </View>
-              </View>
 
-              {errorMessage ? (
-                <View style={styles.errorBanner}>
-                  <Text style={styles.errorIcon}>⚠️</Text>
-                  <Text style={styles.errorText}>{errorMessage}</Text>
-                </View>
-              ) : null}
-
-              <View style={styles.resendRow}>
-                <Text style={styles.resendLabel}>Didn't receive code?</Text>
+                {/* <CustomButton
+                  title="Verify & Login"
+                  onPress={handleVerify}
+                  disabled={isLoading}
+                  isLoading={isLoading}
+                  loadingText="Validating Security Token..."
+                  icon="🔑"
+                /> */}
+                <Button
+                  variant="imageAction"
+                  title="Verify & Login"
+                  image={LoginIcon}
+                  onPress={handleVerify}
+                  style={{ marginBottom: 14, width: "90%" }}
+                />
                 <TouchableOpacity
-                  onPress={handleResend}
-                  disabled={!canResend}
-                  style={styles.resendButtonContainer}
+                  onPress={onBackToMobile}
                   activeOpacity={0.7}
+                  style={styles.backButtonContainer}
                 >
-                  <Text
-                    style={[
-                      styles.refreshIcon,
-                      canResend
-                        ? styles.refreshIconActive
-                        : styles.refreshIconDisabled,
-                    ]}
-                  >
-                    ↻
-                  </Text>
-                  <Text
-                    style={[
-                      styles.resendButtonText,
-                      !canResend && styles.resendButtonTextDisabled,
-                    ]}
-                  >
-                    {canResend ? 'Resend OTP' : `Resend in ${coolDownTimer}s`}
-                  </Text>
+                  <Text style={styles.backArrowSymbol}>←</Text>
+                  <Text style={styles.backButtonText}>Back</Text>
                 </TouchableOpacity>
               </View>
-
-              <CustomButton
-                title="Verify & Login"
-                onPress={handleVerify}
-                disabled={isLoading}
-                isLoading={isLoading}
-                loadingText="Validating Security Token..."
-                icon="🔑"
-              />
-              <TouchableOpacity
-                onPress={onBackToMobile}
-                activeOpacity={0.7}
-                style={styles.backButtonContainer}
-              >
-                <Text style={styles.backArrowSymbol}>←</Text>
-                <Text style={styles.backButtonText}>Back</Text>
-              </TouchableOpacity>
-            </View>
+            </Card>
           </View>
         </ScrollView>
+
 
         <View style={styles.footer}>
           <Text style={styles.footerText}>
             Session token will be issued for REST API security headers.
           </Text>
+
         </View>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </SafeAreaView >
+
   );
 }
 
+
 const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: '#f8fafc' },
+  safeArea: { flex: 1 },
   container: { flex: 1 },
   scrollContent: { padding: 24, flexGrow: 1 },
   contentSpacing: { gap: 24 },
@@ -257,12 +304,12 @@ const styles = StyleSheet.create({
   },
   titleContainer: { gap: 4, marginBottom: 8 },
   title: {
-    fontSize: 20,
+    fontSize: 30,
     fontWeight: '800',
     color: '#0f172a',
     letterSpacing: -0.5,
   },
-  description: { fontSize: 12, color: '#475569', lineHeight: 18 },
+  description: { fontSize: 13, color: '#475569', lineHeight: 18 },
   descriptionBold: { fontWeight: '700', color: '#0f172a' },
   demoBanner: {
     flexDirection: 'row',
@@ -311,6 +358,10 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#1e293b',
     textAlign: 'center',
+  },
+  cardContent: {
+    width: '100%',
+    gap: 20, // Increase to 25 or 30 if you want more space
   },
   otpContainer: { flexDirection: 'row', justifyContent: 'center', gap: 12 },
   otpInput: {

@@ -1,6 +1,7 @@
 // App.jsx
 import React, { useState, useEffect } from 'react';
 import { HomeScreen } from './src/pages/HomeScreen';
+
 import {
   StatusBar,
   StyleSheet,
@@ -26,6 +27,7 @@ import { DocumentUploadScreen } from './src/pages/DocumentUploadScreen';
 import { DraftListScreen } from './src/pages/DraftListScreen'; // <-- Imported separate DraftListScreen
 import { BottomNav } from './src/pages/BottomNav';
 import { CustomButton } from './src/compnents/SharedUIComp/CustomButton';
+import { Location } from './src/pages/LocationSelectionScreen';
 
 import { ImageBackground } from 'react-native';
 import BGImage from './src/assets/images/bg.png';
@@ -48,17 +50,21 @@ function AppContent() {
   const [activeTab, setActiveTab] = useState('register');
   const [authStep, setAuthStep] = useState('mobile');
   const [registeredMobile, setRegisteredMobile] = useState('');
+  const [userType, setUserType] = useState('NORMAL');
   const [locationData, setLocationData] = useState({});
   const [shgMemberData, setShgMemberData] = useState({});
   const [savedDraft, setSavedDraft] = useState(null);
   const [submittedApplications, setSubmittedApplications] = useState([]);
 
-  const handleOtpVerified = async data => {
-    const mobile = data.mobile;
+  const handleOtpVerified = async (data) => {
+    const { mobile, userType } = data;
+
     setRegisteredMobile(mobile);
+    setUserType(userType);
 
     try {
       const storedDraft = await AsyncStorage.getItem(`@draft_form_${mobile}`);
+
       if (storedDraft) {
         setSavedDraft(JSON.parse(storedDraft));
       } else {
@@ -72,9 +78,13 @@ function AppContent() {
       'Verification Successful!',
       `Mobile ${mobile} is verified successfully.`,
     );
-    setAuthStep('action-choice');
-  };
 
+    if (userType === 'SPECIAL') {
+      setAuthStep('location');
+    } else {
+      setAuthStep('action-choice');
+    }
+  };
   const handleOtpSent = mobileNumber => {
     setRegisteredMobile(mobileNumber);
     setAuthStep('otp');
