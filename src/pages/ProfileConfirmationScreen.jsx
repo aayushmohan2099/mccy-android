@@ -3,8 +3,56 @@ import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Platform } from "
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CustomButton } from "../compnents/SharedUIComp/CustomButton";
 
-export function ProfileConfirmationScreen({ profileData = {}, onConfirmCreate, onBackToShgMember }) {
+const translations = {
+    en: {
+        back: "Back",
+
+        title: "Confirm Profile Creation",
+        description:
+            "Please review your selected jurisdictional and member mapping details before creating your profile.",
+
+        summary: "Mapped Profile Summary",
+
+        district: "District",
+        block: "Block / Unit",
+        panchayat: "Panchayat",
+        shgName: "SHG Name",
+        shgId: "SHG ID",
+        member: "Member Name",
+
+        confirm: "Confirm & Create Profile",
+        creating: "Creating Profile...",
+    },
+
+    hi: {
+        back: "वापस",
+
+        title: "प्रोफ़ाइल निर्माण की पुष्टि करें",
+        description:
+            "कृपया प्रोफ़ाइल बनाने से पहले अपने चयनित क्षेत्र और सदस्य विवरण की समीक्षा करें।",
+
+        summary: "चयनित प्रोफ़ाइल सारांश",
+
+        district: "जिला",
+        block: "प्रखंड / इकाई",
+        panchayat: "पंचायत",
+        shgName: "स्वयं सहायता समूह",
+        shgId: "समूह आईडी",
+        member: "सदस्य का नाम",
+
+        confirm: "पुष्टि करें एवं प्रोफ़ाइल बनाएँ",
+        creating: "प्रोफ़ाइल बनाई जा रही है...",
+    },
+};
+
+export function ProfileConfirmationScreen({
+    language,
+    profileData = {},
+    onConfirmCreate,
+    onBackToShgMember
+}) {
     const [isLoading, setIsLoading] = useState(false);
+    const t = translations[language || "en"];
 
     const handleConfirm = () => {
         setIsLoading(true);
@@ -25,7 +73,9 @@ export function ProfileConfirmationScreen({ profileData = {}, onConfirmCreate, o
                     {onBackToShgMember && (
                         <TouchableOpacity onPress={onBackToShgMember} activeOpacity={0.7} style={styles.backButtonContainer}>
                             <Text style={styles.backArrowSymbol}>←</Text>
-                            <Text style={styles.backButtonText}>Back</Text>
+                            <Text style={styles.backButtonText}>
+                                {t.back}
+                            </Text>
                         </TouchableOpacity>
                     )}
                     {/* <View style={styles.badge}><Text style={styles.badgeText}>Stage 1.3.7</Text></View> */}
@@ -33,9 +83,11 @@ export function ProfileConfirmationScreen({ profileData = {}, onConfirmCreate, o
 
                 {/* Header Information */}
                 <View style={styles.titleContainer}>
-                    <Text style={styles.title}>Confirm Profile Creation</Text>
+                    <Text style={styles.title}>
+                        {t.title}
+                    </Text>
                     <Text style={styles.description}>
-                        Please review your selected jurisdictional and member mapping details before creating your profile.
+                        {t.description}
                     </Text>
                 </View>
 
@@ -43,36 +95,38 @@ export function ProfileConfirmationScreen({ profileData = {}, onConfirmCreate, o
                 <View style={styles.card}>
                     <View style={styles.cardHeaderRow}>
                         <Text style={styles.cardHeaderIcon}>📋</Text>
-                        <Text style={styles.cardHeaderText}>Mapped Profile Summary</Text>
+                        <Text style={styles.cardHeaderText}>
+                            {t.summary}
+                        </Text>
                     </View>
 
                     <View style={styles.detailRow}>
-                        <Text style={styles.detailLabel}>District:</Text>
+                        <Text style={styles.detailLabel}>{t.district}:</Text>
                         <Text style={styles.detailValue}>{profileData.district || "Patna"}</Text>
                     </View>
 
                     <View style={styles.detailRow}>
-                        <Text style={styles.detailLabel}>Block / Unit:</Text>
+                        <Text style={styles.detailLabel}>{t.block}:</Text>
                         <Text style={styles.detailValue}>{profileData.block || "Phulwari"}</Text>
                     </View>
 
                     <View style={styles.detailRow}>
-                        <Text style={styles.detailLabel}>Panchayat:</Text>
+                        <Text style={styles.detailLabel}>{t.panchayat}:</Text>
                         <Text style={styles.detailValue}>{profileData.panchayat || "Khagaul"}</Text>
                     </View>
 
                     <View style={styles.detailRow}>
-                        <Text style={styles.detailLabel}>SHG Name:</Text>
+                        <Text style={styles.detailLabel}>{t.shgName}:</Text>
                         <Text style={styles.detailValue}>{profileData.shgName || "Maa Durga SHG"}</Text>
                     </View>
 
                     <View style={styles.detailRow}>
-                        <Text style={styles.detailLabel}>SHG ID:</Text>
+                        <Text style={styles.detailLabel}>{t.shgId}:</Text>
                         <Text style={[styles.detailValue, styles.fontMono]}>{profileData.shgId || "SHG-PTN-0101"}</Text>
                     </View>
 
                     <View style={[styles.detailRow, { borderBottomWidth: 0 }]}>
-                        <Text style={styles.detailLabel}>Member Name:</Text>
+                        <Text style={styles.detailLabel}>{t.member}:</Text>
                         <Text style={[styles.detailValue, styles.boldText]}>👤 {profileData.fullName || profileData.memberName || "Sunita Devi"}</Text>
                     </View>
                 </View>
@@ -89,10 +143,10 @@ export function ProfileConfirmationScreen({ profileData = {}, onConfirmCreate, o
             {/* Footer Confirm Button */}
             <View style={styles.footerContainer}>
                 <CustomButton
-                    title="Confirm & Create Profile"
+                    title={t.confirm}
                     onPress={handleConfirm}
                     isLoading={isLoading}
-                    loadingText="Creating Profile..."
+                    loadingText={t.creating}
                     rightArrow={true}
                 />
             </View>

@@ -49,8 +49,51 @@ const LOCATION_HIERARCHY = [
         ]
     }
 ];
+const translations = {
+    en: {
+        title: "Select Jurisdiction",
+        description:
+            "Choose your administrative District, Block, and Panchayat from the lists below.",
 
-export function LocationSelectionScreen({ initialData = {}, onProceedToForm, onBackToOtp }) {
+        district: "1. Select District",
+        block: "2. Select Block",
+        panchayat: "3. Select Panchayat",
+
+        summaryTitle: "Selected Jurisdiction",
+        summaryPrefix: "Selected:",
+
+        proceed: "Proceed to Application Form",
+
+        back: "Back",
+    },
+
+    hi: {
+        title: "क्षेत्राधिकार चुनें",
+        description:
+            "नीचे दी गई सूची से अपना जिला, प्रखंड और पंचायत चुनें।",
+
+        district: "1. जिला चुनें",
+        block: "2. प्रखंड चुनें",
+        panchayat: "3. पंचायत चुनें",
+
+        summaryTitle: "चयनित क्षेत्राधिकार",
+        summaryPrefix: "चयन:",
+
+        proceed: "आवेदन फॉर्म पर जाएँ",
+
+        back: "वापस",
+    },
+};
+
+
+
+export function LocationSelectionScreen({
+    language,
+    initialData = {},
+    onProceedToForm,
+    onBackToOtp,
+}) {
+    const t = translations[language] || translations.en;
     // State management for cascading selections
     const [selectedDistrict, setSelectedDistrict] = useState(initialData.district || LOCATION_HIERARCHY[0].district);
 
@@ -98,7 +141,9 @@ export function LocationSelectionScreen({ initialData = {}, onProceedToForm, onB
                     {onBackToOtp && (
                         <TouchableOpacity onPress={onBackToOtp} activeOpacity={0.7} style={styles.backButtonContainer}>
                             <Text style={styles.backArrowSymbol}>←</Text>
-                            <Text style={styles.backButtonText}>Back</Text>
+                            <Text style={styles.backButtonText}>
+                                {t.back}
+                            </Text>
                         </TouchableOpacity>
                     )}
                 </View>
@@ -110,9 +155,11 @@ export function LocationSelectionScreen({ initialData = {}, onProceedToForm, onB
                         padding: 30,
                     }}>
                     <View style={styles.titleContainer}>
-                        <Text style={styles.title}>Select Jurisdiction</Text>
+                        <Text style={styles.title}>
+                            {t.title}
+                        </Text>
                         <Text style={styles.description}>
-                            Choose your administrative District, Block, and Panchayat from the dropdown selectors below.
+                            {t.description}
                         </Text>
                     </View>
                 </Card>
@@ -127,7 +174,9 @@ export function LocationSelectionScreen({ initialData = {}, onProceedToForm, onB
 
                     {/* 1. District Dropdown List */}
                     <View style={styles.sectionGroup}>
-                        <Text style={styles.label}>1. Select District</Text>
+                        <Text style={styles.label}>
+                            {t.district}
+                        </Text>
                         <ScrollView style={styles.dropdownList} nestedScrollEnabled={true} showsVerticalScrollIndicator={false}>
                             {LOCATION_HIERARCHY.map((item) => {
                                 const isSelected = selectedDistrict === item.district;
@@ -150,7 +199,9 @@ export function LocationSelectionScreen({ initialData = {}, onProceedToForm, onB
 
                     {/* 2. Block Dropdown List */}
                     <View style={styles.sectionGroup}>
-                        <Text style={styles.label}>2. Select Block ({selectedDistrict})</Text>
+                        <Text style={styles.label}>
+                            {t.block} ({selectedDistrict})
+                        </Text>
                         <ScrollView style={styles.dropdownList} nestedScrollEnabled={true} showsVerticalScrollIndicator={false}>
                             {currentDistrictObj.blocks.map((blk) => {
                                 const isSelected = selectedBlock === blk.name;
@@ -173,7 +224,9 @@ export function LocationSelectionScreen({ initialData = {}, onProceedToForm, onB
 
                     {/* 3. Panchayat Dropdown List */}
                     <View style={styles.sectionGroup}>
-                        <Text style={styles.label}>3. Select Panchayat ({selectedBlock})</Text>
+                        <Text style={styles.label}>
+                            {t.panchayat} ({selectedBlock})
+                        </Text>
                         <ScrollView style={styles.dropdownList} nestedScrollEnabled={true} showsVerticalScrollIndicator={false}>
                             {currentBlockObj.panchayats.map((pan) => {
                                 const isSelected = selectedPanchayat === pan;
@@ -196,9 +249,11 @@ export function LocationSelectionScreen({ initialData = {}, onProceedToForm, onB
 
                     {/* Selection Summary Pill */}
                     <View style={styles.summaryBox}>
-                        <Text style={styles.summaryTitle}>Selected Jurisdictional Mapping:</Text>
+                        <Text style={styles.summaryTitle}>
+                            {t.summaryTitle}
+                        </Text>
                         <Text style={styles.summaryText}>
-                            📍 {selectedDistrict} &gt; {selectedBlock} Block &gt; {selectedPanchayat} Panchayat
+                            📍 {t.summaryPrefix} {selectedDistrict} &gt; {selectedBlock} &gt; {selectedPanchayat}
                         </Text>
                     </View>
 
@@ -209,9 +264,9 @@ export function LocationSelectionScreen({ initialData = {}, onProceedToForm, onB
             {/* Footer Proceed Button */}
             <View style={styles.footerContainer}>
                 <CustomButton
-                    title="Proceed to Application Form"
+                    title={t.proceed}
                     onPress={handleNext}
-                    rightArrow={true}
+                    rightArrow
                 />
                 {/* <Button
                     variant="imageAction"

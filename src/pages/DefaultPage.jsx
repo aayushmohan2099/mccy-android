@@ -25,7 +25,8 @@ import { BottomNav } from './BottomNav';
 
 import BGImage from '../assets/images/bg.png';
 
-export default function DefaultPage() {
+export default function DefaultPage({ language }) {
+
     const [activeTab, setActiveTab] = useState('register');
     const [authStep, setAuthStep] = useState('mobile');
     const [registeredMobile, setRegisteredMobile] = useState('');
@@ -34,6 +35,38 @@ export default function DefaultPage() {
     const [shgMemberData, setShgMemberData] = useState({});
     const [savedDraft, setSavedDraft] = useState(null);
     const [submittedApplications, setSubmittedApplications] = useState([]);
+    const translations = {
+        en: {
+            beneficiaryRegistration: "Beneficiary Registration",
+            registerMobile: "Register with Mobile Number",
+            registerDescription:
+                "Enter your active mobile number to create your account.",
+            primaryMobileNumber: "Primary Mobile Number",
+            otpMessage: "OTP will be sent via SMS to this number.",
+            consent:
+                "I hereby consent to share my mobile data for financial verification under Mahila Credit Card Yojana guidelines.",
+            sendOtp: "Send OTP",
+            note: "Note",
+            noteDescription:
+                "Only one active applicant profile can be linked per mobile number.",
+        },
+
+        hi: {
+            beneficiaryRegistration: "लाभार्थी पंजीकरण",
+            registerMobile: "मोबाइल नंबर से पंजीकरण करें",
+            registerDescription: "अपना सक्रिय मोबाइल नंबर दर्ज करें।",
+            primaryMobileNumber: "प्राथमिक मोबाइल नंबर",
+            otpMessage: "इस नंबर पर एसएमएस द्वारा ओटीपी भेजा जाएगा।",
+            consent:
+                "मैं महिला क्रेडिट कार्ड योजना के अंतर्गत अपने मोबाइल डेटा साझा करने की सहमति देता/देती हूँ।",
+            sendOtp: "ओटीपी भेजें",
+            note: "नोट",
+            noteDescription:
+                "प्रत्येक मोबाइल नंबर पर केवल एक सक्रिय आवेदक प्रोफ़ाइल की अनुमति है।",
+        },
+    };
+
+    const t = translations[language || "en"];
 
     const handleOtpVerified = async (data) => {
         const { mobile, userType } = data;
@@ -201,41 +234,47 @@ export default function DefaultPage() {
                         (authStep === 'mobile' ? (
                             // <HomeScreen />
                             <MobileRegisterScreen
+                                language={language}
                                 onOtpSent={handleOtpSent}
                                 setRegisteredMobile={setRegisteredMobile}
                             />
                         ) : authStep === 'otp' ? (
                             <OtpVerifyScreen
+                                language={language}
                                 mobileNumber={registeredMobile}
                                 onBackToMobile={handleBackToMobile}
                                 onOtpVerified={handleOtpVerified}
                             />
                         ) : authStep === 'action-choice' ? (
                             <ActionChoiceScreen
+                                language={language}
                                 mobileNumber={registeredMobile}
                                 savedDraft={savedDraft}
                                 onFillNewApp={() => {
                                     handleDeleteDraft();
-                                    setAuthStep('location');
+                                    setAuthStep("location");
                                 }}
-                                onResumeDraft={() => setAuthStep('form')}
-                                onViewStatus={() => setActiveTab('status')}
+                                onResumeDraft={() => setAuthStep("form")}
+                                onViewStatus={() => setActiveTab("status")}
                                 onBackToOtp={handleBackToOtp}
                             />
                         ) : authStep === 'draft-list' ? (
                             <DraftListScreen
+                                language={language}
                                 savedDraft={savedDraft}
                                 resumeDraft={() => setAuthStep('form')}
                                 onBack={() => setAuthStep('action-choice')}
                             />
                         ) : authStep === 'location' ? (
                             <LocationSelectionScreen
+                                language={language}
                                 initialData={locationData}
                                 onBackToOtp={handleBackToActionChoice}
                                 onProceedToForm={handleProceedToShgMember}
                             />
                         ) : authStep === 'shg-member' ? (
                             <SHGAndMemberSelectionScreen
+                                language={language}
                                 locationData={locationData}
                                 initialSelection={shgMemberData}
                                 onBackToLocation={handleBackToLocation}
@@ -243,12 +282,14 @@ export default function DefaultPage() {
                             />
                         ) : authStep === 'profile-confirm' ? (
                             <ProfileConfirmationScreen
+                                language={language}
                                 profileData={{ ...locationData, ...shgMemberData }}
                                 onBackToShgMember={handleBackToShgMember}
                                 onConfirmCreate={handleProfileConfirmed}
                             />
                         ) : authStep === 'form' ? (
                             <ApplicationFormScreen
+                                language={language}
                                 currentUser={{ mobile: registeredMobile }}
                                 initialDraft={savedDraft}
                                 onSaveDraft={handleSaveDraft}
@@ -258,6 +299,7 @@ export default function DefaultPage() {
                             />
                         ) : authStep === 'upload' ? (
                             <DocumentUploadScreen
+                                language={language}
                                 applicationForm={savedDraft}
                                 onSubmitFinal={handleSubmitFinal}
                                 onBackToForm={handleBackToForm}
@@ -266,6 +308,7 @@ export default function DefaultPage() {
 
                     {activeTab === 'status' && (
                         <StatusTrackerScreen
+                            language={language}
                             mobileNumber={registeredMobile}
                             submissions={submittedApplications}
                         />
@@ -285,6 +328,7 @@ export default function DefaultPage() {
 
 // --- Action Choice Screen ---
 function ActionChoiceScreen({
+    language,
     mobileNumber,
     savedDraft,
     onFillNewApp,
@@ -383,7 +427,11 @@ function ActionChoiceScreen({
     );
 }
 
-function StatusTrackerScreen({ mobileNumber, submissions }) {
+function StatusTrackerScreen({
+    language,
+    mobileNumber,
+    submissions,
+}) {
     const userSubmissions = submissions.filter(s => s.mobile === mobileNumber);
     const hasSubmitted = userSubmissions.length > 0;
 

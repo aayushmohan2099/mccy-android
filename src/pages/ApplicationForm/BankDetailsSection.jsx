@@ -25,23 +25,73 @@ const ChipSelect = ({ options, selectedValue, onSelect }) => (
         })}
     </ScrollView>
 );
+const translations = {
+    en: {
+        header: "Bank Account Information",
 
-export function BankDetailsSection({ formData, onChange }) {
+        primaryBank: "Primary Bank Name",
+
+        branchName: "Branch Name",
+        branchPlaceholder: "Enter branch location name",
+
+        accountNumber: "Account Number",
+        accountPlaceholder: "Enter bank account number",
+
+        ifsc: "IFSC Code (Auto-fetched)",
+
+        banks: [
+            "State Bank of India",
+            "Punjab National Bank",
+            "Bank of Baroda",
+        ],
+    },
+
+    hi: {
+        header: "बैंक खाते की जानकारी",
+
+        primaryBank: "मुख्य बैंक का नाम",
+
+        branchName: "शाखा का नाम",
+        branchPlaceholder: "शाखा का नाम दर्ज करें",
+
+        accountNumber: "खाता संख्या",
+        accountPlaceholder: "बैंक खाता संख्या दर्ज करें",
+
+        ifsc: "आईएफएससी कोड (स्वतः प्राप्त)",
+
+        banks: [
+            "स्टेट बैंक ऑफ इंडिया",
+            "पंजाब नेशनल बैंक",
+            "बैंक ऑफ बड़ौदा",
+        ],
+    },
+};
+
+export function BankDetailsSection({
+    formData,
+    onChange,
+    language = "en",
+}) {
+
+    const t = translations[language] || translations.en;
     return (
         <View style={styles.stepContainer}>
             <View style={styles.stepHeader}>
                 <Text style={styles.stepHeaderIcon}>🏦</Text>
-                <Text style={styles.stepHeaderText}>Bank Account Information</Text>
+                <Text style={styles.stepHeaderText}>{t.header}</Text>
             </View>
 
             <View style={styles.inputGroup}>
-                <Text style={styles.label}>Primary Bank Name</Text>
+                <Text style={styles.label}>{t.primaryBank}</Text>
                 <ChipSelect
-                    options={ONBOARDED_BANKS.map(b => b.name)}
+                    options={t.banks}
                     selectedValue={formData.selectedBankName}
                     onSelect={(val) => {
-                        const selected = ONBOARDED_BANKS.find(b => b.name === val);
-                        onChange("selectedBankName", val);
+                        const index = t.banks.indexOf(val);
+                        const selected = ONBOARDED_BANKS[index];
+
+                        onChange("selectedBankName", selected.name);
+
                         if (selected) {
                             onChange("ifscCode", selected.code + "0001234");
                         }
@@ -50,23 +100,23 @@ export function BankDetailsSection({ formData, onChange }) {
             </View>
 
             <CustomInput
-                label="Branch Name"
+                label={t.branchName}
                 value={formData.branchName}
                 onChangeText={(val) => onChange("branchName", val)}
-                placeholder="Enter branch location name"
+                placeholder={t.branchPlaceholder}
             />
 
             <CustomInput
-                label="Account Number"
+                label={t.accountNumber}
                 value={formData.accountNumber}
                 onChangeText={(val) => onChange("accountNumber", val.replace(/\D/g, ""))}
-                placeholder="Enter bank account number"
+                placeholder={t.accountPlaceholder}
                 keyboardType="numeric"
                 secureTextEntry
             />
 
             <CustomInput
-                label="IFSC Code (Auto-fetched)"
+                label={t.ifsc}
                 value={formData.ifscCode}
                 editable={false}
             />
@@ -77,14 +127,14 @@ export function BankDetailsSection({ formData, onChange }) {
 const styles = StyleSheet.create({
     stepContainer: { gap: 16 },
     stepHeader: { flexDirection: "row", alignItems: "center", gap: 6, borderBottomWidth: 1, borderBottomColor: "#f1f5f9", paddingBottom: 8 },
-    stepHeaderIcon: { fontSize: 14 },
-    stepHeaderText: { fontSize: 12, fontWeight: "700", color: "#334155", textTransform: "uppercase" },
+    stepHeaderIcon: { fontSize: 20 },
+    stepHeaderText: { fontSize: 25, fontWeight: "700", color: "#334155", textTransform: "uppercase" },
     inputGroup: { gap: 6 },
-    label: { fontSize: 12, fontWeight: "600", color: "#334155" },
+    label: { fontSize: 25, fontWeight: "600", color: "#334155" },
     chipScroll: { flexGrow: 0, marginBottom: 4 },
     chipContainer: { gap: 8 },
     chip: { paddingHorizontal: 12, paddingVertical: 8, backgroundColor: "#f1f5f9", borderRadius: 8, borderWidth: 1, borderColor: "#e2e8f0" },
     chipSelected: { backgroundColor: "#ecfdf5", borderColor: "#059669" },
-    chipText: { fontSize: 12, color: "#475569", fontWeight: "500" },
+    chipText: { fontSize: 20, color: "#475569", fontWeight: "500" },
     chipTextSelected: { color: "#047857", fontWeight: "700" }
 });

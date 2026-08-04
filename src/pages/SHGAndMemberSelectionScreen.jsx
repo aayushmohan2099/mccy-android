@@ -51,7 +51,46 @@ const DEFAULT_SHG_LIST = [
     }
 ];
 
-export function SHGAndMemberSelectionScreen({ locationData = {}, initialSelection = {}, onProceedToForm, onBackToLocation }) {
+const translations = {
+    en: {
+        title: "Select SHG & Member",
+        description: "Selected Panchayat:",
+        description2:
+            "Please select your Self Help Group and Member profile.",
+
+        shg: "1. Select Village Organisation / SHG",
+        member: "2. Select Member Profile",
+
+        mapping: "Selected Profile Mapping",
+        proceed: "Proceed to Application Form",
+        back: "Back",
+        id: "ID",
+    },
+
+    hi: {
+        title: "एसएचजी एवं सदस्य चुनें",
+        description: "चयनित पंचायत:",
+        description2:
+            "कृपया अपना स्वयं सहायता समूह और सदस्य प्रोफ़ाइल चुनें।",
+
+        shg: "1. ग्राम संगठन / स्वयं सहायता समूह चुनें",
+        member: "2. सदस्य प्रोफ़ाइल चुनें",
+
+        mapping: "चयनित प्रोफ़ाइल",
+        proceed: "आवेदन फॉर्म पर जाएँ",
+        back: "वापस",
+        id: "आईडी",
+    },
+};
+
+export function SHGAndMemberSelectionScreen({
+    language,
+    locationData = {},
+    initialSelection = {},
+    onProceedToForm,
+    onBackToLocation,
+}) {
+    const t = translations[language || "en"];
     const panchayatKey = locationData.panchayat || "Khagaul";
     const availableShgs = PANCHAYAT_SHG_MAPPING[panchayatKey] || DEFAULT_SHG_LIST;
 
@@ -91,16 +130,22 @@ export function SHGAndMemberSelectionScreen({ locationData = {}, initialSelectio
                     {onBackToLocation && (
                         <TouchableOpacity onPress={onBackToLocation} activeOpacity={0.7} style={styles.backButtonContainer}>
                             <Text style={styles.backArrowSymbol}>←</Text>
-                            <Text style={styles.backButtonText}>Back</Text>
+                            <Text style={styles.backButtonText}>
+                                {t.back}
+                            </Text>
                         </TouchableOpacity>
                     )}
                 </View>
 
                 {/* Header Information */}
                 <View style={styles.titleContainer}>
-                    <Text style={styles.title}>Select SHG & Member</Text>
+                    <Text style={styles.title}>
+                        {t.title}
+                    </Text>
                     <Text style={styles.description}>
-                        Selected Panchayat: <Text style={styles.boldText}>{panchayatKey}</Text>. Please select your Self Help Group and Member profile.
+                        {t.description}{" "}
+                        <Text style={styles.boldText}>{panchayatKey}</Text>.{" "}
+                        {t.description2}
                     </Text>
                 </View>
 
@@ -108,7 +153,9 @@ export function SHGAndMemberSelectionScreen({ locationData = {}, initialSelectio
 
                     {/* 1. SHG Selector */}
                     <View style={styles.sectionGroup}>
-                        <Text style={styles.label}>1. Select Village Organisation / SHG</Text>
+                        <Text style={styles.label}>
+                            {t.shg}
+                        </Text>
                         <ScrollView style={styles.dropdownList} nestedScrollEnabled={true} showsVerticalScrollIndicator={false}>
                             {availableShgs.map((shg) => {
                                 const isSelected = selectedShg === shg.shgName;
@@ -123,7 +170,9 @@ export function SHGAndMemberSelectionScreen({ locationData = {}, initialSelectio
                                             <Text style={[styles.dropdownItemText, isSelected && styles.dropdownItemTextSelected]}>
                                                 {shg.shgName}
                                             </Text>
-                                            <Text style={styles.subCodeText}>ID: {shg.shgId}</Text>
+                                            <Text style={styles.subCodeText}>
+                                                {t.id}: {shg.shgId}
+                                            </Text>
                                         </View>
                                         {isSelected && <Text style={styles.checkMark}>✓</Text>}
                                     </TouchableOpacity>
@@ -134,7 +183,9 @@ export function SHGAndMemberSelectionScreen({ locationData = {}, initialSelectio
 
                     {/* 2. Member Selector */}
                     <View style={styles.sectionGroup}>
-                        <Text style={styles.label}>2. Select Member Profile ({selectedShg})</Text>
+                        <Text style={styles.label}>
+                            {t.member} ({selectedShg})
+                        </Text>
                         <ScrollView style={styles.dropdownList} nestedScrollEnabled={true} showsVerticalScrollIndicator={false}>
                             {currentShgObj.members.map((mem) => {
                                 const isSelected = selectedMember === mem;
@@ -157,7 +208,9 @@ export function SHGAndMemberSelectionScreen({ locationData = {}, initialSelectio
 
                     {/* Mapping Summary Pill */}
                     <View style={styles.summaryBox}>
-                        <Text style={styles.summaryTitle}>Selected Profile Mapping:</Text>
+                        <Text style={styles.summaryTitle}>
+                            {t.mapping}
+                        </Text>
                         <Text style={styles.summaryText}>
                             🏢 {selectedShg} &gt; 👤 {selectedMember}
                         </Text>
@@ -169,7 +222,7 @@ export function SHGAndMemberSelectionScreen({ locationData = {}, initialSelectio
             {/* Footer Proceed Button */}
             <View style={styles.footerContainer}>
                 <CustomButton
-                    title="Proceed to Application Form"
+                    title={t.proceed}
                     onPress={handleNext}
                     rightArrow={true}
                 />

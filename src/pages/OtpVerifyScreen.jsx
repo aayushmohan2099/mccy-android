@@ -17,6 +17,7 @@ import LoginIcon from '../assets/images/login.svg';
 import Button from '../compnents/SharedUIComp/Button';
 
 export function OtpVerifyScreen({
+  language = "en",
   mobileNumber,
   onOtpVerified,
   onBackToMobile,
@@ -26,8 +27,48 @@ export function OtpVerifyScreen({
   const [canResend, setCanResend] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const translations = {
+    en: {
+      title: "Enter OTP Code",
+      description: "4-digit verification code sent to",
+      demoOtp: "Demo Test OTP:",
+      autoFill: "Auto-fill",
+      otpLabel: "Enter 4-Digit One Time Password",
+      invalidOtp: "Please enter complete 4-digit OTP code.",
+      invalidOtpMessage: "Invalid OTP code. Please use demo code: 1234",
+      didntReceive: "Didn't receive code?",
+      resendOtp: "Resend OTP",
+      resendIn: "Resend in",
+      verifyLogin: "Verify & Login",
+      back: "Back",
+      footer:
+        "Session token will be issued for REST API security headers.",
+    },
+
+    hi: {
+      title: "ओटीपी दर्ज करें",
+      description: "4 अंकों का सत्यापन कोड भेजा गया है",
+      demoOtp: "डेमो ओटीपी:",
+      autoFill: "ऑटो भरें",
+      otpLabel: "4 अंकों का ओटीपी दर्ज करें",
+      invalidOtp: "कृपया पूरा 4 अंकों का ओटीपी दर्ज करें।",
+      invalidOtpMessage:
+        "अमान्य ओटीपी। कृपया डेमो ओटीपी 1234 का उपयोग करें।",
+      didntReceive: "ओटीपी प्राप्त नहीं हुआ?",
+      resendOtp: "पुनः भेजें",
+      resendIn: "पुनः भेजें",
+      verifyLogin: "सत्यापित करें",
+      back: "वापस",
+      footer:
+        "REST API सुरक्षा हेतु सत्र टोकन जारी किया जाएगा।",
+    },
+  };
+
+  const t = translations[language] || translations.en;
 
   const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
+
+
 
   useEffect(() => {
     let timer;
@@ -62,7 +103,7 @@ export function OtpVerifyScreen({
   const handleVerify = () => {
     const enteredOtp = otpValues.join('');
     if (enteredOtp.length !== 4) {
-      setErrorMessage('Please enter complete 4-digit OTP code.');
+      setErrorMessage(t.invalidOtp);
       return;
     }
 
@@ -91,7 +132,7 @@ export function OtpVerifyScreen({
           }
         }
       } else {
-        setErrorMessage('Invalid OTP code. Please use demo code: 1234');
+        setErrorMessage(t.invalidOtpMessage);
       }
     }, 600);
   };
@@ -126,11 +167,10 @@ export function OtpVerifyScreen({
               }}
             >
               <View style={styles.cardContent}>
-                <Text style={styles.title}>Enter OTP Code</Text>
                 <Text style={styles.description}>
-                  4-digit verification code sent to{' '}
+                  {t.description}{' '}
                   <Text style={styles.descriptionBold}>
-                    +91 {mobileNumber || '9876543210'}
+                    +91 {mobileNumber || "9876543210"}
                   </Text>
                 </Text>
               </View>
@@ -142,7 +182,7 @@ export function OtpVerifyScreen({
               <View style={styles.demoBannerLeft}>
                 <Text style={styles.sparkleIcon}>✨</Text>
                 <Text style={styles.demoBannerText}>
-                  Demo Test OTP: <Text style={styles.demoCodeText}>1234</Text>
+                  {t.demoOtp} <Text style={styles.demoCodeText}>1234</Text>
                 </Text>
               </View>
 
@@ -151,7 +191,7 @@ export function OtpVerifyScreen({
                 style={styles.autoFillButton}
                 activeOpacity={0.7}
               >
-                <Text style={styles.autoFillButtonText}>Auto-fill</Text>
+                <Text style={styles.autoFillButtonText}>{t.autoFill}</Text>
               </TouchableOpacity>
             </View>
             <Card
@@ -166,7 +206,7 @@ export function OtpVerifyScreen({
               <View style={styles.cardContent}>
                 <View style={styles.inputGroup}>
                   <Text style={styles.label}>
-                    Enter 4-Digit One Time Password
+                    {t.otpLabel}
                   </Text>
                   <View style={styles.otpContainer}>
                     {otpValues.map((digit, idx) => (
@@ -196,7 +236,7 @@ export function OtpVerifyScreen({
                 ) : null}
 
                 <View style={styles.resendRow}>
-                  <Text style={styles.resendLabel}>Didn't receive code?</Text>
+                  <Text style={styles.resendLabel}>{t.didntReceive}</Text>
                   <TouchableOpacity
                     onPress={handleResend}
                     disabled={!canResend}
@@ -219,7 +259,9 @@ export function OtpVerifyScreen({
                         !canResend && styles.resendButtonTextDisabled,
                       ]}
                     >
-                      {canResend ? 'Resend OTP' : `Resend in ${coolDownTimer}s`}
+                      {canResend
+                        ? t.resendOtp
+                        : `${t.resendIn} ${coolDownTimer}s`}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -234,7 +276,7 @@ export function OtpVerifyScreen({
                 /> */}
                 <Button
                   variant="imageAction"
-                  title="Verify & Login"
+                  title={t.verifyLogin}
                   image={LoginIcon}
                   onPress={handleVerify}
                   style={{ marginBottom: 14, width: "90%" }}
@@ -245,7 +287,7 @@ export function OtpVerifyScreen({
                   style={styles.backButtonContainer}
                 >
                   <Text style={styles.backArrowSymbol}>←</Text>
-                  <Text style={styles.backButtonText}>Back</Text>
+                  <Text style={styles.backButtonText}>{t.back}</Text>
                 </TouchableOpacity>
               </View>
             </Card>
@@ -255,7 +297,7 @@ export function OtpVerifyScreen({
 
         <View style={styles.footer}>
           <Text style={styles.footerText}>
-            Session token will be issued for REST API security headers.
+            {t.footer}
           </Text>
 
         </View>

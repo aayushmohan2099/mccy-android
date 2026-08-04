@@ -1,4 +1,4 @@
-// src/pages/MobileRegisterScreen.jsx
+
 import React, { useState } from 'react';
 import {
   View,
@@ -15,11 +15,55 @@ import Button from '../compnents/SharedUIComp/Button';
 import Card from '../compnents/SharedUIComp/Card';
 import SendotpIcon from '../assets/images/sendotp.svg';
 
-export function MobileRegisterScreen({ onOtpSent, setRegisteredMobile }) {
+export function MobileRegisterScreen({
+  language,
+  onOtpSent,
+  setRegisteredMobile,
+}) {
   const [mobileNumber, setMobileNumber] = useState('');
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const translations = {
+    en: {
+      beneficiaryRegistration: "Beneficiary Registration",
+      registerMobile: "Register with Mobile Number",
+      registerDescription:
+        "Enter your active mobile number to create your account.",
+      primaryMobileNumber: "Primary Mobile Number",
+      otpMessage: "OTP will be sent via SMS to this number.",
+      consent:
+        "I hereby consent to share my mobile data for financial verification under Mahila Credit Card Yojana guidelines.",
+      sendOtp: "Send OTP",
+      note: "Note",
+      noteDescription:
+        "Only one active applicant profile can be linked per mobile number.",
+      invalidMobile:
+        "Please enter a valid 10-digit Indian mobile number.",
+      acceptTerms:
+        "You must accept the data consent terms & conditions.",
+    },
+
+    hi: {
+      beneficiaryRegistration: "लाभार्थी पंजीकरण",
+      registerMobile: "मोबाइल नंबर से पंजीकरण करें",
+      registerDescription: "अपना सक्रिय मोबाइल नंबर दर्ज करें।",
+      primaryMobileNumber: "प्राथमिक मोबाइल नंबर",
+      otpMessage: "इस नंबर पर एसएमएस द्वारा ओटीपी भेजा जाएगा।",
+      consent:
+        "मैं महिला क्रेडिट कार्ड योजना के अंतर्गत अपने मोबाइल डेटा साझा करने की सहमति देता/देती हूँ।",
+      sendOtp: "ओटीपी भेजें",
+      note: "नोट",
+      noteDescription:
+        "प्रत्येक मोबाइल नंबर पर केवल एक सक्रिय आवेदक प्रोफ़ाइल की अनुमति है।",
+      invalidMobile:
+        "कृपया 10 अंकों का सही मोबाइल नंबर दर्ज करें।",
+      acceptTerms:
+        "कृपया नियम एवं शर्तों को स्वीकार करें।",
+    },
+  };
+
+  const t = translations[language] || translations.en;
 
 
 
@@ -34,11 +78,11 @@ export function MobileRegisterScreen({ onOtpSent, setRegisteredMobile }) {
 
   const handleSubmit = () => {
     if (mobileNumber.length !== 10) {
-      setErrorMessage('Please enter a valid 10-digit Indian mobile number.');
+      setErrorMessage(t.invalidMobile);
       return;
     }
     if (!acceptedTerms) {
-      setErrorMessage('You must accept the data consent terms & conditions.');
+      setErrorMessage(t.acceptTerms);
       return;
     }
 
@@ -72,14 +116,16 @@ export function MobileRegisterScreen({ onOtpSent, setRegisteredMobile }) {
             >
               <View style={styles.headerBadgeContainer}>
                 <Text style={styles.headerSubtitle}>
-                  Beneficiary Registration
+                  {t.beneficiaryRegistration}
                 </Text>
               </View>
 
               <View style={styles.titleContainer}>
-                <Text style={styles.title}>Register with Mobile Number</Text>
+                <Text style={styles.title}>
+                  {t.registerMobile}
+                </Text>
                 <Text style={styles.description}>
-                  Enter your active mobile number to create your account.
+                  {t.registerDescription}
                 </Text>
               </View>
             </Card>
@@ -101,7 +147,7 @@ export function MobileRegisterScreen({ onOtpSent, setRegisteredMobile }) {
             >
               <View style={styles.inputGroupWrapper}>
                 <View style={styles.labelRow}>
-                  <Text style={styles.label}>Primary Mobile Number</Text>
+                  <Text style={styles.label}>{t.primaryMobileNumber}</Text>
                 </View>
 
                 <CustomInput
@@ -115,7 +161,7 @@ export function MobileRegisterScreen({ onOtpSent, setRegisteredMobile }) {
                   prefix="🇮🇳 +91"
                 />
                 <Text style={styles.helperText}>
-                  OTP will be sent via SMS to this number.
+                  {t.otpMessage}
                 </Text>
               </View>
 
@@ -139,12 +185,7 @@ export function MobileRegisterScreen({ onOtpSent, setRegisteredMobile }) {
                     </Text>
                   </View>
                   <Text style={styles.termsText}>
-                    I hereby consent to share my mobile data for financial
-                    verification under{' '}
-                    <Text style={styles.termsBold}>
-                      Mahila Credit Card Yojana
-                    </Text>{' '}
-                    guidelines.
+                    {t.consent}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -158,7 +199,7 @@ export function MobileRegisterScreen({ onOtpSent, setRegisteredMobile }) {
 
               <Button
                 variant="imageAction"
-                title="Send OTP"
+                title={t.sendOtp}
                 onPress={handleSubmit}
                 disabled={!isFormValid || isLoading}
                 isLoading={isLoading}
@@ -183,11 +224,12 @@ export function MobileRegisterScreen({ onOtpSent, setRegisteredMobile }) {
               }}
             >
               <View style={styles.infoNoteHeader}>
-                <Text style={styles.infoNoteTitle}>Note</Text>
+                <Text style={styles.infoNoteTitle}>
+                  {t.note}
+                </Text>
               </View>
               <Text style={styles.infoNoteText}>
-                Only one active applicant profile can be linked per mobile
-                number.
+                {t.noteDescription}
               </Text>
             </Card>
           </View>

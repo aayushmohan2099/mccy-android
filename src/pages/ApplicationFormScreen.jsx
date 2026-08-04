@@ -17,7 +17,15 @@ import { VoClfDetailsSection } from "./ApplicationForm/VoClfDetailsSection";
 import { LoanEnterpriseDetailsSection } from "./ApplicationForm/LoanEnterpriseDetailsSection";
 import { BankDetailsSection } from "./ApplicationForm/BankDetailsSection";
 
-export function ApplicationFormScreen({ currentUser, initialDraft, onProceedToUpload, onSaveDraft, onDeleteDraft, onBackToOtp }) {
+export function ApplicationFormScreen({
+    currentUser,
+    initialDraft,
+    onProceedToUpload,
+    onSaveDraft,
+    onDeleteDraft,
+    onBackToOtp,
+    language = "en"
+}) {
     // Initial state setup with draft values if available
     const [formData, setFormData] = useState({
         memberName: initialDraft?.memberName || initialDraft?.fullName || "",
@@ -202,10 +210,27 @@ export function ApplicationFormScreen({ currentUser, initialDraft, onProceedToUp
 
                     {/* Form Card Container rendering sections dynamically */}
                     <View style={styles.formCard}>
-                        {activeFormStep === 1 && <PersonalDetailsSection formData={formData} onChange={handleChange} />}
-                        {activeFormStep === 2 && <VoClfDetailsSection formData={formData} onChange={handleChange} />}
-                        {activeFormStep === 3 && <LoanEnterpriseDetailsSection formData={formData} onChange={handleChange} netProfit={netProfit} />}
-                        {activeFormStep === 4 && <BankDetailsSection formData={formData} onChange={handleChange} />}
+                        {activeFormStep === 1 && (
+                            <PersonalDetailsSection
+                                formData={formData}
+                                onChange={handleChange}
+                                language={language}
+                            />
+                        )}
+                        {activeFormStep === 2 && (
+                            <VoClfDetailsSection
+                                formData={formData}
+                                onChange={handleChange}
+                                language={language}
+                            />
+                        )}
+                        {activeFormStep === 3 && <LoanEnterpriseDetailsSection
+                            formData={formData}
+                            onChange={handleChange}
+                            netProfit={netProfit}
+                            language={language}
+                        />}
+                        {activeFormStep === 4 && <BankDetailsSection formData={formData} onChange={handleChange} language={language} />}
                     </View>
 
                 </ScrollView>

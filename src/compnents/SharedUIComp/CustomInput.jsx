@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         gap: 8
     },
     label: {
-        fontSize: 12,
+        fontSize: 22,
         fontWeight: "700",
         color: "#1e293b"
     },
