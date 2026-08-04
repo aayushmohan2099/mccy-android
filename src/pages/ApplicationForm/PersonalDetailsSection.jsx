@@ -145,8 +145,23 @@ export function PersonalDetailsSection({
                     <CustomInput
                         label={t.dob}
                         value={formData.dob}
-                        onChangeText={(val) => onChange("dob", val)}
-                        placeholder={t.dobPlaceholder}
+                        onChangeText={(text) => {
+                            let value = text.replace(/\D/g, "");
+
+                            if (value.length > 2) {
+                                value = value.slice(0, 2) + "/" + value.slice(2);
+                            }
+
+                            if (value.length > 5) {
+                                value = value.slice(0, 5) + "/" + value.slice(5);
+                            }
+
+                            value = value.slice(0, 10);
+
+                            onChange("dob", value);
+                        }}
+                        placeholder="DD/MM/YYYY"
+                        keyboardType="numeric"
                     />
                 </View>
                 <View style={styles.flex1}>
@@ -180,8 +195,24 @@ export function PersonalDetailsSection({
             <CustomInput
                 label={t.joiningDate}
                 value={formData.shgJoiningDate}
-                onChangeText={(val) => onChange("shgJoiningDate", val)}
-                placeholder={t.joiningDatePlaceholder}
+                onChangeText={(text) => {
+                    let value = text.replace(/\D/g, "");
+
+                    if (value.length > 2) {
+                        value = value.slice(0, 2) + "/" + value.slice(2);
+                    }
+
+                    if (value.length > 5) {
+                        value = value.slice(0, 5) + "/" + value.slice(5);
+                    }
+
+                    value = value.slice(0, 10);
+
+                    onChange("shgJoiningDate", value);
+                }}
+                placeholder="DD/MM/YYYY"
+                keyboardType="numeric"
+                maxLength={10}
             />
 
             <View style={styles.inputGroup}>

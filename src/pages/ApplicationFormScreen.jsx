@@ -17,6 +17,70 @@ import { VoClfDetailsSection } from "./ApplicationForm/VoClfDetailsSection";
 import { LoanEnterpriseDetailsSection } from "./ApplicationForm/LoanEnterpriseDetailsSection";
 import { BankDetailsSection } from "./ApplicationForm/BankDetailsSection";
 
+const translations = {
+    en: {
+        back: "Back",
+        title: "UP Mahila Udhyami Credit Card",
+
+        saveDraft: "Save Draft",
+        startFresh: "Start Fresh",
+
+        personal: "Personal",
+        voClf: "VO / CLF",
+        loan: "Loan & Enterprise",
+        bank: "Bank Details",
+
+        previous: "Previous",
+        next: "Next Step",
+        proceed: "Proceed to Documents",
+
+        draftSaved:
+            "Draft saved successfully! You can resume anytime.",
+
+        draftDeleted:
+            "Draft deleted. Started fresh form.",
+
+        deleteTitle: "Delete Draft",
+        deleteMessage:
+            "Are you sure you want to delete this draft and start a fresh form?",
+
+        cancel: "Cancel",
+        delete: "Yes, Delete"
+    },
+
+    hi: {
+        back: "वापस",
+        title: "यूपी महिला उद्यमी क्रेडिट कार्ड",
+
+        saveDraft: "ड्राफ्ट सहेजें",
+        startFresh: "नया प्रारम्भ करें",
+
+        personal: "व्यक्तिगत",
+        voClf: "वीओ / सीएलएफ",
+        loan: "ऋण एवं उद्यम",
+        bank: "बैंक विवरण",
+
+        previous: "पिछला",
+        next: "अगला चरण",
+        proceed: "दस्तावेज़ अपलोड करें",
+
+        draftSaved:
+            "ड्राफ्ट सफलतापूर्वक सहेजा गया।",
+
+        draftDeleted:
+            "ड्राफ्ट हटाकर नया आवेदन प्रारम्भ किया गया।",
+
+        deleteTitle: "ड्राफ्ट हटाएँ",
+
+        deleteMessage:
+            "क्या आप ड्राफ्ट हटाकर नया आवेदन प्रारम्भ करना चाहते हैं?",
+
+        cancel: "रद्द करें",
+
+        delete: "हाँ, हटाएँ"
+    }
+};
+
 export function ApplicationFormScreen({
     currentUser,
     initialDraft,
@@ -26,6 +90,7 @@ export function ApplicationFormScreen({
     onBackToOtp,
     language = "en"
 }) {
+    const t = translations[language] || translations.en;
     // Initial state setup with draft values if available
     const [formData, setFormData] = useState({
         memberName: initialDraft?.memberName || initialDraft?.fullName || "",
@@ -82,7 +147,7 @@ export function ApplicationFormScreen({
                     netProfit: netProfit.toString()
                 });
             }
-            setSaveStatusMessage("Draft saved successfully! You can resume anytime.");
+            setSaveStatusMessage(t.draftSaved);
             setIsLoading(false);
         }, 600);
     };
@@ -90,12 +155,12 @@ export function ApplicationFormScreen({
     // Delete/Discard draft and start fresh
     const handleDeleteDraftClick = () => {
         Alert.alert(
-            "Delete Draft",
-            "Are you sure you want to delete this draft and start a fresh form?",
+            t.deleteTitle,
+            t.deleteMessage,
             [
-                { text: "Cancel", style: "cancel" },
+                { text: t.cancel, style: "cancel" },
                 {
-                    text: "Yes, Delete",
+                    text: t.delete,
                     style: "destructive",
                     onPress: () => {
                         if (onDeleteDraft) onDeleteDraft();
@@ -131,7 +196,7 @@ export function ApplicationFormScreen({
                             ifscCode: "SBIN0001234",
                         });
                         setActiveFormStep(1);
-                        setSaveStatusMessage("Draft deleted. Started fresh form.");
+                        setSaveStatusMessage(t.draftDeleted);
                     }
                 }
             ]
@@ -162,28 +227,37 @@ export function ApplicationFormScreen({
                             {onBackToOtp && (
                                 <TouchableOpacity onPress={onBackToOtp} activeOpacity={0.7} style={styles.backButtonContainer}>
                                     <Text style={styles.backArrowSymbol}>←</Text>
-                                    <Text style={styles.backButtonText}>Back</Text>
+                                    <Text style={styles.backButtonText}>{t.back}</Text>
                                 </TouchableOpacity>
                             )}
-                            <Text style={styles.headerTitle}>UP Mahila Udhyami Credit Card</Text>
+                            <Text style={styles.headerTitle}>
+                                {t.title}
+                            </Text>
                         </View>
 
                         <View style={styles.headerActionButtons}>
                             <TouchableOpacity style={styles.saveDraftButton} onPress={handleSaveDraftClick} disabled={isLoading}>
                                 <Text style={styles.saveDraftIcon}>💾</Text>
-                                <Text style={styles.saveDraftText}>Save Draft</Text>
+                                <Text style={styles.saveDraftText}>
+                                    {t.saveDraft}
+                                </Text>
                             </TouchableOpacity>
 
                             <TouchableOpacity style={styles.deleteDraftButton} onPress={handleDeleteDraftClick} disabled={isLoading}>
                                 <Text style={styles.deleteDraftIcon}>🗑️</Text>
-                                <Text style={styles.deleteDraftText}>Start Fresh</Text>
+                                <Text style={styles.deleteDraftText}>
+                                    {t.startFresh}
+                                </Text>
                             </TouchableOpacity>
                         </View>
                     </View>
 
                     {/* Step Wizard Header */}
                     <View style={styles.wizardContainer}>
-                        {["Personal", "VO / CLF", "Loan & Enterprise", "Bank Details"].map((step, index) => {
+                        {[t.personal,
+                        t.voClf,
+                        t.loan,
+                        t.bank].map((step, index) => {
                             const stepNumber = index + 1;
                             const isActive = activeFormStep === stepNumber;
                             return (
@@ -239,12 +313,16 @@ export function ApplicationFormScreen({
                 <View style={styles.footerNav}>
                     {activeFormStep > 1 ? (
                         <TouchableOpacity onPress={() => setActiveFormStep(activeFormStep - 1)} style={styles.btnPrev} activeOpacity={0.7}>
-                            <Text style={styles.btnPrevText}>Previous</Text>
+                            <Text style={styles.btnPrevText}>{t.previous}</Text>
                         </TouchableOpacity>
                     ) : <View />}
 
                     <CustomButton
-                        title={activeFormStep === 4 ? "Proceed to Documents" : "Next Step"}
+                        title={
+                            activeFormStep === 4
+                                ? t.proceed
+                                : t.next
+                        }
                         onPress={handleNextClick}
                         rightArrow={true}
                         style={styles.customNextBtn}
@@ -268,17 +346,17 @@ const styles = StyleSheet.create({
     backButtonText: { fontSize: 12, fontWeight: "700", color: "#334155" },
     badge: { backgroundColor: "#fef3c7", borderColor: "#fcd34d", borderWidth: 1, paddingHorizontal: 8, paddingVertical: 4, borderRadius: 6 },
     badgeText: { color: "#78350f", fontSize: 12, fontWeight: "700", fontFamily: Platform.OS === "ios" ? "Courier" : "monospace" },
-    headerTitle: { fontSize: 11, fontWeight: "600", color: "#64748b", textTransform: "uppercase" },
+    headerTitle: { fontSize: 15, fontWeight: "600", color: "#64748b", textTransform: "uppercase" },
     saveDraftButton: { flexDirection: "row", alignItems: "center", gap: 4, backgroundColor: "#ecfdf5", borderColor: "#6ee7b7", borderWidth: 1, paddingHorizontal: 8, paddingVertical: 6, borderRadius: 8 },
-    saveDraftIcon: { fontSize: 12 },
-    saveDraftText: { fontSize: 11, fontWeight: "600", color: "#047857" },
+    saveDraftIcon: { fontSize: 15 },
+    saveDraftText: { fontSize: 15, fontWeight: "600", color: "#047857" },
     deleteDraftButton: { flexDirection: "row", alignItems: "center", gap: 4, backgroundColor: "#fff1f2", borderColor: "#fecdd3", borderWidth: 1, paddingHorizontal: 8, paddingVertical: 6, borderRadius: 8 },
-    deleteDraftIcon: { fontSize: 12 },
-    deleteDraftText: { fontSize: 11, fontWeight: "600", color: "#9f1239" },
+    deleteDraftIcon: { fontSize: 15 },
+    deleteDraftText: { fontSize: 15, fontWeight: "600", color: "#9f1239" },
     wizardContainer: { flexDirection: "row", backgroundColor: "#ffffff", padding: 6, borderRadius: 12, borderColor: "#e2e8f0", borderWidth: 1, justifyContent: "space-between" },
     wizardTab: { flex: 1, paddingVertical: 8, alignItems: "center", borderRadius: 8 },
     wizardTabActive: { backgroundColor: "#f59e0b" },
-    wizardTabText: { fontSize: 9, fontWeight: "700", color: "#64748b" },
+    wizardTabText: { fontSize: 12, fontWeight: "700", color: "#64748b" },
     wizardTabTextActive: { color: "#ffffff" },
     successBanner: { flexDirection: "row", alignItems: "center", gap: 8, backgroundColor: "#ecfdf5", borderColor: "#a7f3d0", borderWidth: 1, padding: 12, borderRadius: 12 },
     successIcon: { fontSize: 14 },
