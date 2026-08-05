@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CustomButton } from "../compnents/SharedUIComp/CustomButton";
+import Button from "../compnents/SharedUIComp/Button";
+import Back from "../assets/images/back.svg";
+
 
 const translations = {
     en: {
@@ -71,12 +74,22 @@ export function ProfileConfirmationScreen({
                 {/* Top Navigation Row with Back Button */}
                 <View style={styles.topBarRow}>
                     {onBackToShgMember && (
-                        <TouchableOpacity onPress={onBackToShgMember} activeOpacity={0.7} style={styles.backButtonContainer}>
-                            <Text style={styles.backArrowSymbol}>←</Text>
-                            <Text style={styles.backButtonText}>
-                                {t.back}
-                            </Text>
-                        </TouchableOpacity>
+                        // <TouchableOpacity onPress={onBackToShgMember} activeOpacity={0.7} style={styles.backButtonContainer}>
+                        //     <Text style={styles.backArrowSymbol}>←</Text>
+                        //     <Text style={styles.backButtonText}>
+                        //         {t.back}
+                        //     </Text>
+                        // </TouchableOpacity>
+                        <Button
+                            variant="imageAction"
+                            title={t.back}
+                            image={Back}
+                            onPress={onBackToShgMember}
+                            style={{
+                                marginTop: 10,
+                                width: "50%",
+                            }}
+                        />
                     )}
                     {/* <View style={styles.badge}><Text style={styles.badgeText}>Stage 1.3.7</Text></View> */}
                 </View>

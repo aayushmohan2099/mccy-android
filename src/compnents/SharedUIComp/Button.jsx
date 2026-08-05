@@ -33,6 +33,8 @@ export default function Button({
         "outline",
         "danger",
         "imageAction",
+        "back",
+
     ].includes(variant)
         ? variant
         : "default";
@@ -99,10 +101,17 @@ export default function Button({
             loader: "#ffffff",
             loadingText: "Please wait...",
         },
+        back: {
+            button: styles.backButton,
+            text: styles.backText,
+            loader: "#ffffff",
+            loadingText: "",
+        },
     };
 
     const current = variantStyles[buttonVariant];
     const isImageVariant = buttonVariant === "imageAction";
+    const isBackVariant = buttonVariant === "back";
 
     // SVGs imported via react-native-svg-transformer come in as a
     // component (a function), not a source object/number like PNGs do.
@@ -128,18 +137,46 @@ export default function Button({
                         {current.loadingText}
                     </Text>
                 </>
+            ) : isBackVariant ? (
+                <View style={styles.backCircle}>
+                    {SvgComponent ? (
+                        <SvgComponent
+                            width={24}
+                            height={24}
+                            preserveAspectRatio="xMidYMid meet"
+                            {...svgIconProps}
+                        />
+                    ) : image ? (
+                        <Image
+                            source={image}
+                            resizeMode="contain"
+                            style={[
+                                {
+                                    width: 24,
+                                    height: 24,
+                                },
+                                imageStyle,
+                            ]}
+                        />
+                    ) : null}
+                </View>
             ) : isImageVariant ? (
                 <>
                     <View style={styles.imageChip}>
-                        {SvgComponent ? (
-                            <SvgComponent width={40} height={40} {...svgIconProps} />
-                        ) : image ? (
-                            <Image
-                                source={image}
-                                style={[styles.image, imageStyle]}
-                                resizeMode="cover"
-                            />
-                        ) : null}
+                        ...
+                    </View>
+
+                    <View style={styles.titleContainer}>
+                        <Text
+                            style={[current.text, textStyle]}
+                            numberOfLines={1}
+                        >
+                            {title}
+                        </Text>
+                    </View>
+
+                    <View style={styles.arrowContainer}>
+                        <Text style={styles.chevron}>›</Text>
                     </View>
 
                     <Text
@@ -307,20 +344,20 @@ const styles = StyleSheet.create({
     },
 
     imageActionText: {
+        flex: 1,
         color: "#FFFFFF",
-        fontSize: 25,
-        fontWeight: "600",
-        marginLeft: 16,
-        marginRight: 10,
+        fontSize: 18,
+        fontWeight: "700",
+        textAlign: "center",
+        // Shift text slightly to the right
     },
 
     imageChip: {
-        width: 48,
-        height: 52,
-        backgroundColor: "#F3ECD9",
-        alignItems: "center",
+        width: 52,
+        height: "100%",
         justifyContent: "center",
-        overflow: "hidden",
+        alignItems: "center",
+        backgroundColor: "#F3ECD9",
     },
 
     image: {
@@ -330,16 +367,53 @@ const styles = StyleSheet.create({
 
     chevron: {
         color: "#fff",
-        fontSize: 40,
+        fontSize: 28,
         fontWeight: "700",
     },
+
+    backButton: {
+        width: 60,
+        height: 60,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "transparent",
+    },
+    backCircle: {
+        width: 46,
+        height: 46,
+        borderRadius: 23,
+        backgroundColor: "#F3ECD9",
+        justifyContent: "center",
+        alignItems: "center",
+        overflow: "hidden",
+    },
+
+    backImage: {
+        width: 28,
+        height: 28,
+    },
+
+    backText: {},
 
     // ---------------- COMMON ----------------
     disabled: {
         opacity: 0.5,
     },
 
+
     icon: {
         fontSize: 18,
+    },
+
+    titleContainer: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+
+    arrowContainer: {
+        width: 52,        // Same width as imageChip
+        alignItems: "center",
+        justifyContent: "center",
     },
 });

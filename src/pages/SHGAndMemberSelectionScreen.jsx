@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CustomButton } from "../compnents/SharedUIComp/CustomButton";
+import Button from "../compnents/SharedUIComp/Button";
+import Back from "../assets/images/back.svg";
 
 // --- Mock Data Mapping: Panchayat -> SHGs -> Members ---
 const PANCHAYAT_SHG_MAPPING = {
@@ -128,12 +130,22 @@ export function SHGAndMemberSelectionScreen({
                 {/* Top Navigation Row */}
                 <View style={styles.topBarRow}>
                     {onBackToLocation && (
-                        <TouchableOpacity onPress={onBackToLocation} activeOpacity={0.7} style={styles.backButtonContainer}>
-                            <Text style={styles.backArrowSymbol}>←</Text>
-                            <Text style={styles.backButtonText}>
-                                {t.back}
-                            </Text>
-                        </TouchableOpacity>
+                        // <TouchableOpacity onPress={onBackToLocation} activeOpacity={0.7} style={styles.backButtonContainer}>
+                        //     <Text style={styles.backArrowSymbol}>←</Text>
+                        //     <Text style={styles.backButtonText}>
+                        //         {t.back}
+                        //     </Text>
+                        // </TouchableOpacity>
+                        <Button
+                            variant="imageAction"
+                            title={t.back}
+                            image={Back}
+                            onPress={onBackToLocation}
+                            style={{
+                                marginTop: 10,
+                                width: "50%",
+                            }}
+                        />
                     )}
                 </View>
 

@@ -16,11 +16,13 @@ import { PersonalDetailsSection } from "./ApplicationForm/PersonalDetailsSection
 import { VoClfDetailsSection } from "./ApplicationForm/VoClfDetailsSection";
 import { LoanEnterpriseDetailsSection } from "./ApplicationForm/LoanEnterpriseDetailsSection";
 import { BankDetailsSection } from "./ApplicationForm/BankDetailsSection";
+import Back from "../assets/images/back.svg";
+import Button from "../compnents/SharedUIComp/Button";
 
 const translations = {
     en: {
         back: "Back",
-        title: "UP Mahila Udhyami Credit Card",
+        title: "Mahila Credit Card Yojna",
 
         saveDraft: "Save Draft",
         startFresh: "Start Fresh",
@@ -50,7 +52,7 @@ const translations = {
 
     hi: {
         back: "वापस",
-        title: "यूपी महिला उद्यमी क्रेडिट कार्ड",
+        title: "महिला क्रेडिट कार्ड योजना",
 
         saveDraft: "ड्राफ्ट सहेजें",
         startFresh: "नया प्रारम्भ करें",
@@ -222,34 +224,36 @@ export function ApplicationFormScreen({
                 <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
 
                     {/* Header Area */}
-                    <View style={styles.headerArea}>
-                        <View style={styles.headerLeft}>
-                            {onBackToOtp && (
-                                <TouchableOpacity onPress={onBackToOtp} activeOpacity={0.7} style={styles.backButtonContainer}>
-                                    <Text style={styles.backArrowSymbol}>←</Text>
-                                    <Text style={styles.backButtonText}>{t.back}</Text>
-                                </TouchableOpacity>
-                            )}
-                            <Text style={styles.headerTitle}>
-                                {t.title}
+                    {/* Title */}
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.headerTitle}>
+                            {t.title}
+                        </Text>
+                    </View>
+
+                    {/* Save / Delete */}
+                    <View style={styles.actionContainer}>
+                        <TouchableOpacity
+                            style={styles.saveDraftButton}
+                            onPress={handleSaveDraftClick}
+                            disabled={isLoading}
+                        >
+                            <Text style={styles.saveDraftIcon}>💾</Text>
+                            <Text style={styles.saveDraftText}>
+                                {t.saveDraft}
                             </Text>
-                        </View>
+                        </TouchableOpacity>
 
-                        <View style={styles.headerActionButtons}>
-                            <TouchableOpacity style={styles.saveDraftButton} onPress={handleSaveDraftClick} disabled={isLoading}>
-                                <Text style={styles.saveDraftIcon}>💾</Text>
-                                <Text style={styles.saveDraftText}>
-                                    {t.saveDraft}
-                                </Text>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity style={styles.deleteDraftButton} onPress={handleDeleteDraftClick} disabled={isLoading}>
-                                <Text style={styles.deleteDraftIcon}>🗑️</Text>
-                                <Text style={styles.deleteDraftText}>
-                                    {t.startFresh}
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
+                        <TouchableOpacity
+                            style={styles.deleteDraftButton}
+                            onPress={handleDeleteDraftClick}
+                            disabled={isLoading}
+                        >
+                            <Text style={styles.deleteDraftIcon}>🗑️</Text>
+                            <Text style={styles.deleteDraftText}>
+                                {t.startFresh}
+                            </Text>
+                        </TouchableOpacity>
                     </View>
 
                     {/* Step Wizard Header */}
@@ -311,18 +315,21 @@ export function ApplicationFormScreen({
 
                 {/* Footer Navigation Buttons */}
                 <View style={styles.footerNav}>
-                    {activeFormStep > 1 ? (
-                        <TouchableOpacity onPress={() => setActiveFormStep(activeFormStep - 1)} style={styles.btnPrev} activeOpacity={0.7}>
-                            <Text style={styles.btnPrevText}>{t.previous}</Text>
-                        </TouchableOpacity>
-                    ) : <View />}
+                    <CustomButton
+                        title={activeFormStep === 1 ? t.back : t.previous}
+                        onPress={() => {
+                            if (activeFormStep === 1) {
+                                onBackToOtp();
+                            } else {
+                                setActiveFormStep(activeFormStep - 1);
+                            }
+                        }}
+                        rightArrow={false}
+                        style={styles.customPrevBtn}
+                    />
 
                     <CustomButton
-                        title={
-                            activeFormStep === 4
-                                ? t.proceed
-                                : t.next
-                        }
+                        title={activeFormStep === 4 ? t.proceed : t.next}
                         onPress={handleNextClick}
                         rightArrow={true}
                         style={styles.customNextBtn}
@@ -338,15 +345,29 @@ const styles = StyleSheet.create({
     safeArea: { flex: 1 },
     container: { flex: 1 },
     scrollContent: { padding: 16, paddingBottom: 40, gap: 16 },
-    headerArea: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 },
-    headerLeft: { flexDirection: "row", alignItems: "center", gap: 8 },
-    headerActionButtons: { flexDirection: "row", gap: 6 },
+    titleContainer: {
+        marginTop: 10,
+        alignItems: "center",
+    },
+
+    headerTitle: {
+        fontSize: 26,
+        fontWeight: "700",
+        color: "#64748b",
+        textTransform: "uppercase",
+    },
+
+    actionContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginTop: 16,
+    },
     backButtonContainer: { flexDirection: "row", alignItems: "center", backgroundColor: "#e2e8f0", paddingHorizontal: 10, paddingVertical: 6, borderRadius: 8, gap: 6 },
     backArrowSymbol: { fontSize: 14, fontWeight: "bold", color: "#334155" },
     backButtonText: { fontSize: 12, fontWeight: "700", color: "#334155" },
     badge: { backgroundColor: "#fef3c7", borderColor: "#fcd34d", borderWidth: 1, paddingHorizontal: 8, paddingVertical: 4, borderRadius: 6 },
     badgeText: { color: "#78350f", fontSize: 12, fontWeight: "700", fontFamily: Platform.OS === "ios" ? "Courier" : "monospace" },
-    headerTitle: { fontSize: 15, fontWeight: "600", color: "#64748b", textTransform: "uppercase" },
+    // headerTitle: { fontSize: 20, fontWeight: "600", color: "#64748b", textTransform: "uppercase" },
     saveDraftButton: { flexDirection: "row", alignItems: "center", gap: 4, backgroundColor: "#ecfdf5", borderColor: "#6ee7b7", borderWidth: 1, paddingHorizontal: 8, paddingVertical: 6, borderRadius: 8 },
     saveDraftIcon: { fontSize: 15 },
     saveDraftText: { fontSize: 15, fontWeight: "600", color: "#047857" },
@@ -354,9 +375,15 @@ const styles = StyleSheet.create({
     deleteDraftIcon: { fontSize: 15 },
     deleteDraftText: { fontSize: 15, fontWeight: "600", color: "#9f1239" },
     wizardContainer: { flexDirection: "row", backgroundColor: "#ffffff", padding: 6, borderRadius: 12, borderColor: "#e2e8f0", borderWidth: 1, justifyContent: "space-between" },
-    wizardTab: { flex: 1, paddingVertical: 8, alignItems: "center", borderRadius: 8 },
+    wizardTab: {
+        flex: 1,
+        paddingVertical: 10,
+        marginHorizontal: 4,   // <-- add this
+        alignItems: "center",
+        borderRadius: 8,
+    },
     wizardTabActive: { backgroundColor: "#f59e0b" },
-    wizardTabText: { fontSize: 12, fontWeight: "700", color: "#64748b" },
+    wizardTabText: { fontSize: 15, fontWeight: "700", color: "#64748b" },
     wizardTabTextActive: { color: "#ffffff" },
     successBanner: { flexDirection: "row", alignItems: "center", gap: 8, backgroundColor: "#ecfdf5", borderColor: "#a7f3d0", borderWidth: 1, padding: 12, borderRadius: 12 },
     successIcon: { fontSize: 14 },
@@ -365,5 +392,11 @@ const styles = StyleSheet.create({
     footerNav: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", padding: 16, paddingBottom: Platform.OS === "ios" ? 24 : 16, backgroundColor: "#ffffff", borderTopWidth: 1, borderTopColor: "#e2e8f0" },
     btnPrev: { paddingHorizontal: 16, paddingVertical: 12, backgroundColor: "#e2e8f0", borderRadius: 10 },
     btnPrevText: { fontSize: 12, fontWeight: "700", color: "#334155" },
-    customNextBtn: { paddingHorizontal: 20, paddingVertical: 12, borderRadius: 10 }
+    customPrevBtn: {
+        width: "40%",
+    },
+
+    customNextBtn: {
+        width: "50%",
+    },
 });

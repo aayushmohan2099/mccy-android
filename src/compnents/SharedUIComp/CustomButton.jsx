@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     },
     submitButtonText: {
         color: "#ffffff",
-        fontSize: 14,
+        fontSize: 18,
         fontWeight: "700"
     },
     buttonIcon: {

@@ -3,8 +3,9 @@ import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Platform } from "
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CustomButton } from "../compnents/SharedUIComp/CustomButton";
 import Card from "../compnents/SharedUIComp/Card";
-// import { Button } from "../compnents/SharedUIComp/Button";
+import Button from "../compnents/SharedUIComp/Button";
 // import Application from '../assets/images/application.png';
+import Back from '../assets/images/back.svg';
 
 
 // --- Mock Cascading Data Hierarchy ---
@@ -73,7 +74,7 @@ const translations = {
             "नीचे दी गई सूची से अपना जिला, प्रखंड और पंचायत चुनें।",
 
         district: "1. जिला चुनें",
-        block: "2. प्रखंड चुनें",
+        block: "2. विकास खंड चुनें",
         panchayat: "3. पंचायत चुनें",
 
         summaryTitle: "चयनित क्षेत्राधिकार",
@@ -139,12 +140,23 @@ export function LocationSelectionScreen({
                 {/* Top Navigation Row */}
                 <View style={styles.topBarRow}>
                     {onBackToOtp && (
-                        <TouchableOpacity onPress={onBackToOtp} activeOpacity={0.7} style={styles.backButtonContainer}>
-                            <Text style={styles.backArrowSymbol}>←</Text>
-                            <Text style={styles.backButtonText}>
-                                {t.back}
-                            </Text>
-                        </TouchableOpacity>
+                        // <TouchableOpacity onPress={onBackToOtp} activeOpacity={0.7} style={styles.backButtonContainer}>
+                        //     <Text style={styles.backArrowSymbol}>←</Text>
+                        //     <Text style={styles.backButtonText}>
+                        //         {t.back}
+                        //     </Text>
+                        // </TouchableOpacity>
+                        <Button
+                            variant="imageAction"
+                            title={t.back}
+                            image={Back}
+                            onPress={onBackToOtp}
+                            style={{
+                                marginTop: 10,
+                                width: "50%",
+                                alignSelf: "flex-start",
+                            }}
+                        />
                     )}
                 </View>
 
@@ -303,7 +315,7 @@ const styles = StyleSheet.create({
     dropdownItemTextSelected: { color: "#047857", fontWeight: "700" },
     checkMark: { fontSize: 14, fontWeight: "bold", color: "#059669" },
     summaryBox: { backgroundColor: "#fffbeb", borderColor: "#fde68a", borderWidth: 1, padding: 12, borderRadius: 12, gap: 4 },
-    summaryTitle: { fontSize: 15, fontWeight: "700", color: "#451a03", textTransform: "uppercase" },
-    summaryText: { fontSize: 14, fontWeight: "600", color: "#92400e" },
+    summaryTitle: { fontSize: 18, fontWeight: "700", color: "#451a03", textTransform: "uppercase" },
+    summaryText: { fontSize: 16, fontWeight: "600", color: "#92400e" },
     footerContainer: { padding: 16, backgroundColor: "#ffffff", borderTopWidth: 1, borderTopColor: "#e2e8f0" }
 });

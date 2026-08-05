@@ -24,6 +24,114 @@ import { DraftListScreen } from './DraftListScreen';
 import { BottomNav } from './BottomNav';
 
 import BGImage from '../assets/images/bg.png';
+const translations = {
+    en: {
+        // Existing
+        beneficiaryRegistration: "Beneficiary Registration",
+        registerMobile: "Register with Mobile Number",
+        registerDescription:
+            "Enter your active mobile number to create your account.",
+        primaryMobileNumber: "Primary Mobile Number",
+        otpMessage: "OTP will be sent via SMS to this number.",
+        consent:
+            "I hereby consent to share my mobile data for financial verification under Mahila Credit Card Yojana guidelines.",
+        sendOtp: "Send OTP",
+        note: "Note",
+        noteDescription:
+            "Only one active applicant profile can be linked per mobile number.",
+
+        // New
+        back: "Back",
+        welcomeBeneficiary: "Welcome Beneficiary",
+        verifiedMobile: "Verified Mobile",
+        chooseAction: "Choose an action below to proceed.",
+        savedDraft: "Saved Draft Application",
+        incompleteApplication: "Incomplete Application Form",
+        name: "Name",
+        enterprise: "Enterprise",
+        notSpecified: "Not Specified",
+        step: "Step",
+        of: "of",
+        resume: "Resume",
+        fillNewApplication: "Fill New Application Form",
+        fillNewApplicationDesc:
+            "Start a fresh Mahila Credit Card application pipeline",
+        viewApplicationStatus: "View Application Status",
+        viewApplicationStatusDesc:
+            "Check verification pipeline status of your submitted forms",
+        liveStatusTracker: "Live Status Tracker",
+        underReview: "Under BMM Review",
+        application: "Application",
+        district: "District",
+        block: "Block",
+        requestedLimit: "Requested Limit",
+        submittedOn: "Submitted on",
+        noForms: "No Forms Filled Yet",
+        noFormsDesc:
+            "Please complete mobile verification first to view your application status.",
+        verificationSuccessful: "Verification Successful!",
+        applicationSubmitted: "Application Submitted Successfully! 🎉",
+        applicationSubmittedDesc:
+            "Your Mahila Credit Card application has been locked and forwarded to BMM review.",
+        viewStatus: "View Status",
+        notice: "Notice",
+        loginFirst:
+            "Please login with your mobile number first to view drafts.",
+    },
+
+    hi: {
+        // Existing
+        beneficiaryRegistration: "लाभार्थी पंजीकरण",
+        registerMobile: "मोबाइल नंबर से पंजीकरण करें",
+        registerDescription: "अपना सक्रिय मोबाइल नंबर दर्ज करें।",
+        primaryMobileNumber: "प्राथमिक मोबाइल नंबर",
+        otpMessage: "इस नंबर पर एसएमएस द्वारा ओटीपी भेजा जाएगा।",
+        consent:
+            "मैं महिला क्रेडिट कार्ड योजना के अंतर्गत अपने मोबाइल डेटा साझा करने की सहमति देता/देती हूँ।",
+        sendOtp: "ओटीपी भेजें",
+        note: "नोट",
+        noteDescription:
+            "प्रत्येक मोबाइल नंबर पर केवल एक सक्रिय आवेदक प्रोफ़ाइल की अनुमति है।",
+
+        // New
+        back: "वापस",
+        welcomeBeneficiary: "स्वागत है लाभार्थी",
+        verifiedMobile: "सत्यापित मोबाइल",
+        chooseAction: "आगे बढ़ने के लिए नीचे दिए गए विकल्प चुनें।",
+        savedDraft: "सहेजा गया ड्राफ्ट आवेदन",
+        incompleteApplication: "अधूरा आवेदन",
+        name: "नाम",
+        enterprise: "उद्यम",
+        notSpecified: "निर्दिष्ट नहीं",
+        step: "चरण",
+        of: "में से",
+        resume: "जारी रखें",
+        fillNewApplication: "नया आवेदन भरें",
+        fillNewApplicationDesc:
+            "महिला क्रेडिट कार्ड योजना के लिए नया आवेदन प्रारम्भ करें।",
+        viewApplicationStatus: "आवेदन की स्थिति देखें",
+        viewApplicationStatusDesc:
+            "अपने आवेदन की स्थिति देखें।",
+        liveStatusTracker: "आवेदन स्थिति",
+        underReview: "BMM समीक्षा में",
+        application: "आवेदन",
+        district: "जिला",
+        block: "ब्लॉक",
+        requestedLimit: "मांगी गई राशि",
+        submittedOn: "जमा करने की तिथि",
+        noForms: "कोई आवेदन उपलब्ध नहीं",
+        noFormsDesc:
+            "कृपया पहले मोबाइल सत्यापन पूरा करें।",
+        verificationSuccessful: "सत्यापन सफल!",
+        applicationSubmitted: "आवेदन सफलतापूर्वक जमा हुआ! 🎉",
+        applicationSubmittedDesc:
+            "आपका आवेदन BMM समीक्षा हेतु भेज दिया गया है।",
+        viewStatus: "स्थिति देखें",
+        notice: "सूचना",
+        loginFirst:
+            "ड्राफ्ट देखने के लिए पहले मोबाइल नंबर से लॉगिन करें।",
+    },
+};
 
 export default function DefaultPage({ language }) {
 
@@ -35,38 +143,10 @@ export default function DefaultPage({ language }) {
     const [shgMemberData, setShgMemberData] = useState({});
     const [savedDraft, setSavedDraft] = useState(null);
     const [submittedApplications, setSubmittedApplications] = useState([]);
-    const translations = {
-        en: {
-            beneficiaryRegistration: "Beneficiary Registration",
-            registerMobile: "Register with Mobile Number",
-            registerDescription:
-                "Enter your active mobile number to create your account.",
-            primaryMobileNumber: "Primary Mobile Number",
-            otpMessage: "OTP will be sent via SMS to this number.",
-            consent:
-                "I hereby consent to share my mobile data for financial verification under Mahila Credit Card Yojana guidelines.",
-            sendOtp: "Send OTP",
-            note: "Note",
-            noteDescription:
-                "Only one active applicant profile can be linked per mobile number.",
-        },
-
-        hi: {
-            beneficiaryRegistration: "लाभार्थी पंजीकरण",
-            registerMobile: "मोबाइल नंबर से पंजीकरण करें",
-            registerDescription: "अपना सक्रिय मोबाइल नंबर दर्ज करें।",
-            primaryMobileNumber: "प्राथमिक मोबाइल नंबर",
-            otpMessage: "इस नंबर पर एसएमएस द्वारा ओटीपी भेजा जाएगा।",
-            consent:
-                "मैं महिला क्रेडिट कार्ड योजना के अंतर्गत अपने मोबाइल डेटा साझा करने की सहमति देता/देती हूँ।",
-            sendOtp: "ओटीपी भेजें",
-            note: "नोट",
-            noteDescription:
-                "प्रत्येक मोबाइल नंबर पर केवल एक सक्रिय आवेदक प्रोफ़ाइल की अनुमति है।",
-        },
-    };
-
     const t = translations[language || "en"];
+
+
+
 
     const handleOtpVerified = async (data) => {
         const { mobile, userType } = data;
@@ -336,6 +416,7 @@ function ActionChoiceScreen({
     onViewStatus,
     onBackToOtp,
 }) {
+    const t = translations[language || "en"]
     return (
         <SafeAreaView style={styles.adminSafe}>
             <View style={styles.adminContainer}>
@@ -347,17 +428,20 @@ function ActionChoiceScreen({
                             style={styles.backButtonContainer}
                         >
                             <Text style={styles.backArrowSymbol}>←</Text>
-                            <Text style={styles.backButtonText}>Back</Text>
+                            <Text style={styles.backButtonText}>{t.back}</Text>
                         </TouchableOpacity>
                     )}
                 </View>
 
                 <View style={styles.adminHeader}>
                     <Text style={styles.adminEmoji}>🎯</Text>
-                    <Text style={styles.adminTitle}>Welcome Beneficiary</Text>
+                    <Text style={styles.adminTitle}>
+                        {t.welcomeBeneficiary}
+                    </Text>
                     <Text style={styles.adminSubtitle}>
-                        Verified Mobile: +91 {mobileNumber || '9876543210'}. Choose an
-                        action below to proceed.
+                        {t.verifiedMobile}: +91 {mobileNumber || "9876543210"}.
+                        {" "}
+                        {t.chooseAction}
                     </Text>
                 </View>
 
@@ -365,7 +449,7 @@ function ActionChoiceScreen({
                     {savedDraft ? (
                         <View style={styles.draftContainerBox}>
                             <Text style={styles.sectionHeaderTitle}>
-                                📂 Saved Draft Application
+                                📂 {t.savedDraft}
                             </Text>
                             <TouchableOpacity
                                 style={styles.draftItemCard}
@@ -375,15 +459,17 @@ function ActionChoiceScreen({
                                 <View style={styles.draftTextGroup}>
                                     <Text style={styles.draftItemTitle}>
                                         {savedDraft.memberName
-                                            ? `Name: ${savedDraft.memberName}`
-                                            : 'Incomplete Application Form'}
+                                            ? `${t.name}: ${savedDraft.memberName}`
+                                            : t.incompleteApplication}
                                     </Text>
                                     <Text style={styles.draftItemSub}>
-                                        Enterprise: {savedDraft.enterpriseName || 'Not Specified'} |
-                                        Step {savedDraft.activeFormStep || 1} of 4
+                                        {t.enterprise}: {savedDraft.enterpriseName || t.notSpecified} |{" "}
+                                        {t.step} {savedDraft.activeFormStep || 1} {t.of} 4
                                     </Text>
                                 </View>
-                                <Text style={styles.resumeButtonText}>Resume →</Text>
+                                <Text style={styles.resumeButtonText}>
+                                    {t.resume} →
+                                </Text>
                             </TouchableOpacity>
                         </View>
                     ) : null}
@@ -396,10 +482,10 @@ function ActionChoiceScreen({
                         <Text style={styles.portalCardIcon}>📝</Text>
                         <View style={styles.portalCardTextGroup}>
                             <Text style={styles.portalCardTitle}>
-                                Fill New Application Form
+                                {t.fillNewApplication}
                             </Text>
                             <Text style={styles.portalCardDesc}>
-                                Start a fresh Mahila Credit Card application pipeline
+                                {t.fillNewApplicationDesc}
                             </Text>
                         </View>
                         <Text style={styles.portalCardArrow}>→</Text>
@@ -413,10 +499,10 @@ function ActionChoiceScreen({
                         <Text style={styles.portalCardIcon}>📊</Text>
                         <View style={styles.portalCardTextGroup}>
                             <Text style={styles.portalCardTitle}>
-                                View Application Status
+                                {t.viewApplicationStatus}
                             </Text>
                             <Text style={styles.portalCardDesc}>
-                                Check verification pipeline status of your submitted forms
+                                {t.viewApplicationStatusDesc}
                             </Text>
                         </View>
                         <Text style={styles.portalCardArrow}>→</Text>
@@ -518,7 +604,7 @@ const styles = StyleSheet.create({
         gap: 6,
     },
     backArrowSymbol: { fontSize: 14, fontWeight: 'bold', color: '#334155' },
-    backButtonText: { fontSize: 12, fontWeight: '700', color: '#334155' },
+    backButtonText: { fontSize: 22, fontWeight: '700', color: '#334155' },
     badge: {
         backgroundColor: '#fef3c7',
         borderColor: '#fcd34d',
@@ -534,15 +620,15 @@ const styles = StyleSheet.create({
         fontFamily: Platform.OS === 'ios' ? 'Courier' : 'monospace',
     },
     adminHeader: { alignItems: 'center', gap: 8 },
-    adminEmoji: { fontSize: 36 },
+    adminEmoji: { fontSize: 40 },
     adminTitle: {
-        fontSize: 22,
+        fontSize: 35,
         fontWeight: '800',
         color: '#0f172a',
         textAlign: 'center',
     },
     adminSubtitle: {
-        fontSize: 12,
+        fontSize: 20,
         color: '#475569',
         textAlign: 'center',
         lineHeight: 18,
@@ -593,8 +679,8 @@ const styles = StyleSheet.create({
     resumeButtonText: { fontSize: 12, fontWeight: '800', color: '#d97706' },
     portalCardIcon: { fontSize: 24 },
     portalCardTextGroup: { flex: 1, gap: 2 },
-    portalCardTitle: { fontSize: 14, fontWeight: '700', color: '#1e293b' },
-    portalCardDesc: { fontSize: 11, color: '#64748b' },
+    portalCardTitle: { fontSize: 20, fontWeight: '700', color: '#1e293b' },
+    portalCardDesc: { fontSize: 17, color: '#64748b' },
     portalCardArrow: { fontSize: 16, fontWeight: 'bold', color: '#059669' },
     placeholderSafe: { flex: 1, backgroundColor: '#f8fafc' },
     placeholderContainer: {

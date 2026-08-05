@@ -15,6 +15,8 @@ import { CustomButton } from '../compnents/SharedUIComp/CustomButton';
 import Card from '../compnents/SharedUIComp/Card';
 import LoginIcon from '../assets/images/login.svg';
 import Button from '../compnents/SharedUIComp/Button';
+import Back from '../assets/images/back.svg';
+import Back1 from '../assets/images/back1.svg';
 
 export function OtpVerifyScreen({
   language = "en",
@@ -281,14 +283,24 @@ export function OtpVerifyScreen({
                   onPress={handleVerify}
                   style={{ marginBottom: 14, width: "90%" }}
                 />
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   onPress={onBackToMobile}
                   activeOpacity={0.7}
                   style={styles.backButtonContainer}
                 >
                   <Text style={styles.backArrowSymbol}>←</Text>
                   <Text style={styles.backButtonText}>{t.back}</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
+                <Button
+                  variant="back"
+                  image={Back1}
+                  onPress={onBackToMobile}
+                  style={{
+                    marginTop: 10,
+
+                  }}
+                />
+
               </View>
             </Card>
           </View>
@@ -311,7 +323,7 @@ export function OtpVerifyScreen({
 const styles = StyleSheet.create({
   safeArea: { flex: 1 },
   container: { flex: 1 },
-  scrollContent: { padding: 24, flexGrow: 1 },
+  scrollContent: { padding: 24, flexGrow: 1, marginTop: 60 },
   contentSpacing: { gap: 24 },
   topBarRow: {
     flexDirection: 'row',
@@ -351,7 +363,7 @@ const styles = StyleSheet.create({
     color: '#0f172a',
     letterSpacing: -0.5,
   },
-  description: { fontSize: 13, color: '#475569', lineHeight: 18 },
+  description: { fontSize: 16, color: '#475569', lineHeight: 18 },
   descriptionBold: { fontWeight: '700', color: '#0f172a' },
   demoBanner: {
     flexDirection: 'row',
@@ -365,7 +377,7 @@ const styles = StyleSheet.create({
   },
   demoBannerLeft: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   sparkleIcon: { fontSize: 14 },
-  demoBannerText: { fontSize: 12, color: '#1e293b' },
+  demoBannerText: { fontSize: 15, color: '#1e293b' },
   demoCodeText: {
     fontWeight: '700',
     color: '#b45309',
@@ -380,7 +392,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     borderRadius: 4,
   },
-  autoFillButtonText: { fontSize: 11, fontWeight: '700', color: '#92400e' },
+  autoFillButtonText: { fontSize: 15, fontWeight: '700', color: '#92400e' },
   card: {
     backgroundColor: '#ffffff',
     padding: 20,
@@ -396,7 +408,7 @@ const styles = StyleSheet.create({
   },
   inputGroup: { gap: 12 },
   label: {
-    fontSize: 12,
+    fontSize: 18,
     fontWeight: '700',
     color: '#1e293b',
     textAlign: 'center',
@@ -438,12 +450,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingTop: 4,
   },
-  resendLabel: { fontSize: 12, color: '#64748b' },
+  resendLabel: { fontSize: 15, color: '#64748b' },
   resendButtonContainer: { flexDirection: 'row', alignItems: 'center', gap: 4 },
-  refreshIcon: { fontSize: 16, fontWeight: 'bold' },
+  refreshIcon: { fontSize: 18, fontWeight: 'bold' },
   refreshIconActive: { color: '#047857' },
   refreshIconDisabled: { color: '#94a3b8' },
-  resendButtonText: { fontSize: 12, fontWeight: '600', color: '#047857' },
+  resendButtonText: { fontSize: 15, fontWeight: '600', color: '#047857' },
   resendButtonTextDisabled: { color: '#94a3b8' },
   footer: {
     padding: 16,

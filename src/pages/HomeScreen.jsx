@@ -7,6 +7,7 @@ import Card from "../compnents/SharedUIComp/Card";
 import ApplyIcon from "../assets/images/lll.svg";
 import SendotpIcon from "../assets/images/sendotp.svg";
 
+
 export function HomeScreen() {
     return (
         <View style={styles.container}>
