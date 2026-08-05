@@ -163,31 +163,36 @@ export default function Button({
             ) : isImageVariant ? (
                 <>
                     <View style={styles.imageChip}>
-                        ...
+                        {SvgComponent ? (
+                            <SvgComponent
+                                width={imageStyle?.width || 28}
+                                height={imageStyle?.height || 28}
+                                {...svgIconProps}
+                            />
+                        ) : image ? (
+                            <Image
+                                source={image}
+                                style={[styles.image, imageStyle]}
+                                resizeMode="cover"
+                            />
+                        ) : null}
                     </View>
 
                     <View style={styles.titleContainer}>
                         <Text
                             style={[current.text, textStyle]}
                             numberOfLines={1}
+                            ellipsizeMode="tail"
                         >
                             {title}
                         </Text>
                     </View>
 
                     <View style={styles.arrowContainer}>
-                        <Text style={styles.chevron}>›</Text>
+                        <Text style={styles.chevron}>
+                            {rightIcon || "\u203A"}
+                        </Text>
                     </View>
-
-                    <Text
-                        style={[current.text, textStyle]}
-                        numberOfLines={1}
-                        ellipsizeMode="tail"
-                    >
-                        {title}
-                    </Text>
-
-                    <Text style={styles.chevron}>{rightIcon || "\u203A"}</Text>
                 </>
             ) : (
                 <>
@@ -344,12 +349,9 @@ const styles = StyleSheet.create({
     },
 
     imageActionText: {
-        flex: 1,
         color: "#FFFFFF",
         fontSize: 18,
         fontWeight: "700",
-        textAlign: "center",
-        // Shift text slightly to the right
     },
 
     imageChip: {
@@ -407,13 +409,14 @@ const styles = StyleSheet.create({
 
     titleContainer: {
         flex: 1,
-        alignItems: "center",
         justifyContent: "center",
+        alignItems: "center",
+        paddingLeft: 18, // shifts title slightly right
     },
 
     arrowContainer: {
-        width: 52,        // Same width as imageChip
-        alignItems: "center",
+        width: 52,
         justifyContent: "center",
+        alignItems: "center",
     },
 });

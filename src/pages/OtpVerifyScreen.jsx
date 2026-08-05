@@ -16,7 +16,7 @@ import Card from '../compnents/SharedUIComp/Card';
 import LoginIcon from '../assets/images/login.svg';
 import Button from '../compnents/SharedUIComp/Button';
 import Back from '../assets/images/back.svg';
-import Back1 from '../assets/images/back1.svg';
+import Back1 from '../assets/images/back1.png';
 
 export function OtpVerifyScreen({
   language = "en",
