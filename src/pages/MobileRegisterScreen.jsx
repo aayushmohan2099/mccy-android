@@ -204,7 +204,7 @@ export function MobileRegisterScreen({
                 disabled={!isFormValid || isLoading}
                 isLoading={isLoading}
                 image={SendotpIcon}
-                style={{ marginBottom: 14, width: '60%', alignSelf: 'center' }}
+                style={{ marginBottom: 14, width: '70%', alignSelf: 'center' }}
               />
             </Card>
 

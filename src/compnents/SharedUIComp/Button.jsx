@@ -152,8 +152,8 @@ export default function Button({
                             resizeMode="contain"
                             style={[
                                 {
-                                    width: 24,
-                                    height: 24,
+                                    width: 35,
+                                    height: 35,
                                 },
                                 imageStyle,
                             ]}
@@ -384,6 +384,8 @@ const styles = StyleSheet.create({
         width: 46,
         height: 46,
         borderRadius: 23,
+        borderWidth: 5,
+        borderColor: "#D46D15",
         backgroundColor: "#F3ECD9",
         justifyContent: "center",
         alignItems: "center",

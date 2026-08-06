@@ -18,14 +18,22 @@ import { LoanEnterpriseDetailsSection } from "./ApplicationForm/LoanEnterpriseDe
 import { BankDetailsSection } from "./ApplicationForm/BankDetailsSection";
 import Back from "../assets/images/back.svg";
 import Button from "../compnents/SharedUIComp/Button";
+import RefreshIcon from "../assets/images/refresh.png";
+import PencilIcon from "../assets/images/pencil.png";
+// import { Save } from "lucide-react-native";
+import { User } from "lucide-react-native";
+import { Building2 } from "lucide-react-native";
+import { WalletCards } from "lucide-react-native";
+import { Landmark } from "lucide-react-native";
+
 
 const translations = {
     en: {
         back: "Back",
         title: "Mahila Credit Card Yojna",
 
-        saveDraft: "Save Draft",
-        startFresh: "Start Fresh",
+        saveDraft: "Draft",
+        startFresh: "Reset",
 
         personal: "Personal",
         voClf: "VO / CLF",
@@ -233,47 +241,92 @@ export function ApplicationFormScreen({
 
                     {/* Save / Delete */}
                     <View style={styles.actionContainer}>
-                        <TouchableOpacity
-                            style={styles.saveDraftButton}
+                        <Button
+                            variant="imageAction"
+                            title={t.saveDraft}
+                            image={PencilIcon}
                             onPress={handleSaveDraftClick}
                             disabled={isLoading}
-                        >
-                            <Text style={styles.saveDraftIcon}>💾</Text>
-                            <Text style={styles.saveDraftText}>
-                                {t.saveDraft}
-                            </Text>
-                        </TouchableOpacity>
+                            style={{
+                                marginBottom: 12,
+                                width: 180
+                            }}
+                            imageStyle={{
+                                width: 50,
+                                height: 50,
+                            }}
+                        />
 
-                        <TouchableOpacity
-                            style={styles.deleteDraftButton}
-                            onPress={handleDeleteDraftClick}
+                        <Button
+                            variant="imageAction"
+                            title={t.startFresh}
+                            image={RefreshIcon}
+                            onPress={handleSaveDraftClick}
                             disabled={isLoading}
-                        >
-                            <Text style={styles.deleteDraftIcon}>🗑️</Text>
-                            <Text style={styles.deleteDraftText}>
-                                {t.startFresh}
-                            </Text>
-                        </TouchableOpacity>
+                            style={{
+                                marginBottom: 12,
+                                width: 180,
+                            }}
+                            imageStyle={{
+                                width: 50,
+                                height: 50,
+                            }}
+                        />
+
                     </View>
 
                     {/* Step Wizard Header */}
                     <View style={styles.wizardContainer}>
-                        {[t.personal,
-                        t.voClf,
-                        t.loan,
-                        t.bank].map((step, index) => {
+                        {[<User
+                            size={50}
+                            color="#000"
+                            strokeWidth={2}
+                        />,
+                        <Building2
+                            size={50}
+                            color="#000000"
+                            strokeWidth={2}
+                        />,
+                        <WalletCards
+                            size={50}
+                            color="#000000"
+                            strokeWidth={2}
+                        />,
+                        <Landmark
+                            size={50}
+                            color="#000000"
+                            strokeWidth={2}
+                        />].map((step, index) => {
                             const stepNumber = index + 1;
                             const isActive = activeFormStep === stepNumber;
                             return (
                                 <TouchableOpacity
-                                    key={step}
+                                    key={stepNumber}
                                     style={[styles.wizardTab, isActive && styles.wizardTabActive]}
                                     onPress={() => setActiveFormStep(stepNumber)}
                                     activeOpacity={0.7}
                                 >
-                                    <Text style={[styles.wizardTabText, isActive && styles.wizardTabTextActive]}>
-                                        {stepNumber}. {step}
-                                    </Text>
+                                    <View style={styles.stepRow}>
+
+                                        <View
+                                            style={[
+                                                styles.stepCircle,
+                                                isActive && styles.stepCircleActive,
+                                            ]}
+                                        >
+                                            <Text
+                                                style={[
+                                                    styles.stepNumber,
+                                                    isActive && styles.stepNumberActive,
+                                                ]}
+                                            >
+                                                {stepNumber}
+                                            </Text>
+                                        </View>
+
+                                        {step}
+
+                                    </View>
                                 </TouchableOpacity>
                             );
                         })}
@@ -394,6 +447,38 @@ const styles = StyleSheet.create({
     btnPrevText: { fontSize: 12, fontWeight: "700", color: "#334155" },
     customPrevBtn: {
         width: "40%",
+    },
+    stepRow: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 8,
+    },
+
+    stepCircle: {
+        width: 30,
+        height: 30,
+        borderRadius: 15,
+        borderWidth: 2,
+        borderColor: "#64748B",
+        backgroundColor: "#fff",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+
+    stepCircleActive: {
+        borderColor: "#D46D15",
+        backgroundColor: "#FFF8E7",
+    },
+
+    stepNumber: {
+        fontSize: 14,
+        fontWeight: "700",
+        color: "#64748B",
+    },
+
+    stepNumberActive: {
+        color: "#D46D15",
     },
 
     customNextBtn: {

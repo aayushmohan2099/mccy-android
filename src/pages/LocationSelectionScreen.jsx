@@ -6,6 +6,7 @@ import Card from "../compnents/SharedUIComp/Card";
 import Button from "../compnents/SharedUIComp/Button";
 // import Application from '../assets/images/application.png';
 import Back from '../assets/images/back.svg';
+import Back1 from '../assets/images/back1.png';
 
 
 // --- Mock Cascading Data Hierarchy ---
@@ -146,15 +147,28 @@ export function LocationSelectionScreen({
                         //         {t.back}
                         //     </Text>
                         // </TouchableOpacity>
+                        // <Button
+                        //     variant="imageAction"
+                        //     title={t.back}
+                        //     image={Back}
+                        //     onPress={onBackToOtp}
+                        //     style={{
+                        //         marginTop: 10,
+                        //         width: "50%",
+                        //         alignSelf: "flex-start",
+                        //     }}
+                        // />
                         <Button
-                            variant="imageAction"
-                            title={t.back}
-                            image={Back}
+                            variant="back"
+                            image={Back1}
                             onPress={onBackToOtp}
                             style={{
                                 marginTop: 10,
-                                width: "50%",
                                 alignSelf: "flex-start",
+                            }}
+                            imageStyle={{
+                                width: 30,
+                                height: 30,
                             }}
                         />
                     )}

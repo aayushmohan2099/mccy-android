@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { CustomButton } from "../compnents/SharedUIComp/CustomButton";
 import Button from "../compnents/SharedUIComp/Button";
 import Back from "../assets/images/back.svg";
+import Back1 from '../assets/images/back1.png';
 
 
 const translations = {
@@ -80,14 +81,27 @@ export function ProfileConfirmationScreen({
                         //         {t.back}
                         //     </Text>
                         // </TouchableOpacity>
+                        // <Button
+                        //     variant="imageAction"
+                        //     title={t.back}
+                        //     image={Back}
+                        //     onPress={onBackToShgMember}
+                        //     style={{
+                        //         marginTop: 10,
+                        //         width: "50%",
+                        //     }}
+                        // />
                         <Button
-                            variant="imageAction"
-                            title={t.back}
-                            image={Back}
+                            variant="back"
+                            image={Back1}
                             onPress={onBackToShgMember}
                             style={{
                                 marginTop: 10,
-                                width: "50%",
+                                alignSelf: "flex-start",
+                            }}
+                            imageStyle={{
+                                width: 30,
+                                height: 30,
                             }}
                         />
                     )}
