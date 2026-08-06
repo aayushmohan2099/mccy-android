@@ -281,6 +281,11 @@ export default function DefaultPage({ language }) {
             {
                 ...finalData,
                 mobile: registeredMobile,
+
+                // Dummy data
+                district: "Lucknow",
+                block: "Gosaingang",
+
                 submittedAt: new Date().toLocaleDateString(),
             },
         ]);
@@ -288,17 +293,17 @@ export default function DefaultPage({ language }) {
         await handleDeleteDraft();
 
         Alert.alert(
-            'Application Submitted Successfully! 🎉',
-            'Your Mahila Credit Card application has been locked and forwarded to BMM review.',
+            "Application Submitted Successfully! 🎉",
+            "Your Mahila Credit Card application has been locked and forwarded to BMM review.",
             [
                 {
-                    text: 'View Status',
+                    text: "View Status",
                     onPress: () => {
-                        setAuthStep('action-choice');
-                        setActiveTab('status');
+                        setAuthStep("action-choice");
+                        setActiveTab("status");
                     },
                 },
-            ],
+            ]
         );
     };
 
@@ -518,6 +523,9 @@ function StatusTrackerScreen({
     mobileNumber,
     submissions,
 }) {
+
+    const t = translations[language || "en"];
+
     const userSubmissions = submissions.filter(s => s.mobile === mobileNumber);
     const hasSubmitted = userSubmissions.length > 0;
 
@@ -526,7 +534,10 @@ function StatusTrackerScreen({
             <View style={styles.statusContainer}>
                 <View style={styles.adminHeader}>
                     <Text style={styles.placeholderEmoji}>📈</Text>
-                    <Text style={styles.placeholderTitle}>Live Status Tracker</Text>
+
+                    <Text style={styles.placeholderTitle}>
+                        {t.liveStatusTracker}
+                    </Text>
                     <Text style={styles.placeholderSub}>
                         Verified User Mobile: +91 {mobileNumber || 'Not Verified / Guest'}
                     </Text>
@@ -548,7 +559,7 @@ function StatusTrackerScreen({
                                     </View>
                                 </View>
                                 <Text style={styles.statusDetail}>
-                                    👤 Name: {sub.fullName || 'Beneficiary'}
+                                    👤 Name: {sub.fullName || 'Sita Devi'}
                                 </Text>
                                 <Text style={styles.statusDetail}>
                                     📍 District: {sub.district} | Block: {sub.block}

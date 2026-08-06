@@ -156,7 +156,7 @@ export function BankDetailsSection({
                                         setShowSuggestions(false);
 
                                         onChange("selectedBankName", bank.name);
-                                        onChange("ifscCode", bank.code + "0001234");
+                                        onChange("ifscCode", bank.code + "00987");
                                     }}
                                 >
                                     <Text style={styles.searchItemText}>

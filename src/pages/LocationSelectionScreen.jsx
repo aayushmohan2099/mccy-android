@@ -29,9 +29,9 @@ const LOCATION_HIERARCHY = [
         ]
     },
     {
-        district: "Muzaffarpur",
+        district: "Lucknow",
         blocks: [
-            { name: "Aurai", panchayats: ["Barthu", "Jajuar", "Kalyanpur", "Bela"] },
+            { name: "Gosaingang", panchayats: ["Amethi", "Jajuar", "Kalyanpur", "Bela"] },
             { name: "Bochaha", panchayats: ["Aima", "Dahila", "Garha", "Rahuan"] },
             { name: "Kanti", panchayats: ["Patahi", "Marwan", "Kalwari", "Akhtar"] }
         ]

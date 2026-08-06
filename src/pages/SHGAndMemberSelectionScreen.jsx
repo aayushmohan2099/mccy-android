@@ -48,9 +48,9 @@ const PANCHAYAT_SHG_MAPPING = {
 
 const DEFAULT_SHG_LIST = [
     {
-        shgName: "Ekta Mahila SHG",
-        shgId: "SHG-GEN-9991",
-        members: ["Applicant (Self Entry)", "Priyanka Kumari", "Anamika Roy"]
+        shgName: "Amethi Khurd",
+        shgId: "SHG-88291",
+        members: ["Applicant (Self Entry)", "Sita Devi", "Anamika Roy"]
     }
 ];
 
