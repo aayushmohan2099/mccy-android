@@ -22,6 +22,9 @@ import { ApplicationFormScreen } from './ApplicationFormScreen';
 import { DocumentUploadScreen } from './DocumentUploadScreen';
 import { DraftListScreen } from './DraftListScreen';
 import { BottomNav } from './BottomNav';
+import { ApplicationDetailsScreen } from "./ApplicationDetailsScreen";
+import Back1 from '../assets/images/back1.png';
+import Button from '../compnents/SharedUIComp/Button';
 
 import BGImage from '../assets/images/bg.png';
 const translations = {
@@ -143,6 +146,7 @@ export default function DefaultPage({ language }) {
     const [shgMemberData, setShgMemberData] = useState({});
     const [savedDraft, setSavedDraft] = useState(null);
     const [submittedApplications, setSubmittedApplications] = useState([]);
+    const [selectedApplication, setSelectedApplication] = useState(null);
     const t = translations[language || "en"];
 
 
@@ -276,25 +280,25 @@ export default function DefaultPage({ language }) {
     };
 
     const handleSubmitFinal = async (finalData) => {
-        setSubmittedApplications((prev) => [
-            ...prev,
-            {
-                ...finalData,
-                mobile: registeredMobile,
+        const application = {
+            ...finalData,
+            mobile: registeredMobile,
 
-                // Dummy data
-                district: "Lucknow",
-                block: "Gosaingang",
+            district: locationData.district || "",
+            block: locationData.block || "",
 
-                submittedAt: new Date().toLocaleDateString(),
-            },
-        ]);
+            submittedAt: new Date().toLocaleDateString(),
+
+            status: "Under BMM Review",
+        };
+
+        setSubmittedApplications(prev => [...prev, application]);
 
         await handleDeleteDraft();
 
         Alert.alert(
             "Application Submitted Successfully! 🎉",
-            "Your Mahila Credit Card application has been locked and forwarded to BMM review.",
+            "Your application has been forwarded to BMM review.",
             [
                 {
                     text: "View Status",
@@ -382,22 +386,36 @@ export default function DefaultPage({ language }) {
                                 onProceedToUpload={handleProceedToUpload}
                                 onBackToOtp={() => setAuthStep('profile-confirm')}
                             />
-                        ) : authStep === 'upload' ? (
+                        ) : authStep === "upload" ? (
                             <DocumentUploadScreen
                                 language={language}
                                 applicationForm={savedDraft}
                                 onSubmitFinal={handleSubmitFinal}
                                 onBackToForm={handleBackToForm}
                             />
+                        ) : authStep === "application-details" ? (
+                            <ApplicationDetailsScreen
+                                application={selectedApplication}
+                                onBack={() => setAuthStep("action-choice")}
+                            />
                         ) : null)}
 
-                    {activeTab === 'status' && (
-                        <StatusTrackerScreen
-                            language={language}
-                            mobileNumber={registeredMobile}
-                            submissions={submittedApplications}
-                        />
-                    )}
+                    {activeTab === "status" &&
+                        (authStep === "application-details" ? (
+                            <ApplicationDetailsScreen
+                                application={selectedApplication}
+                                onBack={() => setAuthStep("action-choice")}
+                            />
+                        ) : (
+                            <StatusTrackerScreen
+                                language={language}
+                                mobileNumber={registeredMobile}
+                                submissions={submittedApplications}
+                                setSelectedApplication={setSelectedApplication}
+                                setAuthStep={setAuthStep}
+                            />
+                        ))
+                    }
                 </ImageBackground>
             </View>
 
@@ -427,19 +445,32 @@ function ActionChoiceScreen({
             <View style={styles.adminContainer}>
                 <View style={styles.topBarRow}>
                     {onBackToOtp && (
-                        <TouchableOpacity
+                        // <TouchableOpacity
+                        //     onPress={onBackToOtp}
+                        //     activeOpacity={0.7}
+                        //     style={styles.backButtonContainer}
+                        // >
+                        //     <Text style={styles.backArrowSymbol}>←</Text>
+                        //     <Text style={styles.backButtonText}>{t.back}</Text>
+                        // </TouchableOpacity>
+                        <Button
+                            variant="back"
+                            image={Back1}
                             onPress={onBackToOtp}
-                            activeOpacity={0.7}
-                            style={styles.backButtonContainer}
-                        >
-                            <Text style={styles.backArrowSymbol}>←</Text>
-                            <Text style={styles.backButtonText}>{t.back}</Text>
-                        </TouchableOpacity>
+                            style={{
+                                marginTop: 10,
+                                alignSelf: "flex-start",
+                            }}
+                            imageStyle={{
+                                width: 30,
+                                height: 30,
+                            }}
+                        />
                     )}
                 </View>
 
                 <View style={styles.adminHeader}>
-                    <Text style={styles.adminEmoji}>🎯</Text>
+                    {/* <Text style={styles.adminEmoji}>🎯</Text> */}
                     <Text style={styles.adminTitle}>
                         {t.welcomeBeneficiary}
                     </Text>
@@ -522,6 +553,8 @@ function StatusTrackerScreen({
     language,
     mobileNumber,
     submissions,
+    setSelectedApplication,
+    setAuthStep,
 }) {
 
     const t = translations[language || "en"];
@@ -549,7 +582,15 @@ function StatusTrackerScreen({
                         showsVerticalScrollIndicator={false}
                     >
                         {userSubmissions.map((sub, index) => (
-                            <View key={index} style={styles.statusCard}>
+                            <TouchableOpacity
+                                key={index}
+                                style={styles.statusCard}
+                                activeOpacity={0.8}
+                                onPress={() => {
+                                    setSelectedApplication(sub);
+                                    setAuthStep("application-details");
+                                }}
+                            >
                                 <View style={styles.statusRowTop}>
                                     <Text style={styles.statusAppId}>
                                         Application #{1001 + index}
@@ -559,18 +600,17 @@ function StatusTrackerScreen({
                                     </View>
                                 </View>
                                 <Text style={styles.statusDetail}>
-                                    👤 Name: {sub.fullName || 'Sita Devi'}
+                                    🏦 Bank: {sub.selectedBankName}
                                 </Text>
+
                                 <Text style={styles.statusDetail}>
-                                    📍 District: {sub.district} | Block: {sub.block}
+                                    💰 Amount: ₹{sub.requiredCapital}
                                 </Text>
-                                <Text style={styles.statusDetail}>
-                                    💳 Requested Limit: ₹{sub.amountRequested || 'N/A'}
-                                </Text>
+
                                 <Text style={styles.statusDate}>
-                                    Submitted on: {sub.submittedAt}
+                                    📅 Applied On: {sub.submittedAt}
                                 </Text>
-                            </View>
+                            </TouchableOpacity>
                         ))}
                     </ScrollView>
                 ) : (
@@ -596,7 +636,7 @@ const styles = StyleSheet.create({
         marginBottom: Platform.OS === 'android' ? 25 : 0,
     },
     screenContainer: { flex: 1 },
-    adminSafe: { flex: 1, backgroundColor: '#f8fafc' },
+    adminSafe: { flex: 1 },
     adminContainer: { flex: 1, padding: 24, justifyContent: 'center', gap: 20 },
     statusContainer: { flex: 1, padding: 20, justifyContent: 'space-between' },
     topBarRow: {
@@ -743,10 +783,10 @@ const styles = StyleSheet.create({
         borderRadius: 6,
     },
     statusBadgeText: { fontSize: 10, fontWeight: '700', color: '#b45309' },
-    statusDetail: { fontSize: 12, color: '#334155' },
+    statusDetail: { fontSize: 18, color: '#334155' },
     statusDate: {
-        fontSize: 10,
-        color: '#94a3b8',
+        fontSize: 18,
+        color: '#334155',
         marginTop: 4,
         fontFamily: Platform.OS === 'ios' ? 'Courier' : 'monospace',
     },

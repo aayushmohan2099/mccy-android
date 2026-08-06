@@ -182,7 +182,7 @@ export function BankDetailsSection({
                 onChangeText={(val) => onChange("accountNumber", val.replace(/\D/g, ""))}
                 placeholder={t.accountPlaceholder}
                 keyboardType="numeric"
-                secureTextEntry
+
             />
 
             <CustomInput
