@@ -396,7 +396,24 @@ export default function DefaultPage({ language }) {
                         ) : authStep === "application-details" ? (
                             <ApplicationDetailsScreen
                                 application={selectedApplication}
-                                onBack={() => setAuthStep("action-choice")}
+                                onBack={() => {
+                                    setActiveTab("status");
+                                    setAuthStep("");
+                                }}
+                                onStatusChange={(updatedApplication) => {
+
+                                    setSelectedApplication(updatedApplication);
+
+                                    setSubmittedApplications(prev =>
+                                        prev.map(item =>
+                                            item.mobile === updatedApplication.mobile &&
+                                                item.submittedAt === updatedApplication.submittedAt
+                                                ? updatedApplication
+                                                : item
+                                        )
+                                    );
+
+                                }}
                             />
                         ) : null)}
 
@@ -404,7 +421,24 @@ export default function DefaultPage({ language }) {
                         (authStep === "application-details" ? (
                             <ApplicationDetailsScreen
                                 application={selectedApplication}
-                                onBack={() => setAuthStep("action-choice")}
+                                onBack={() => {
+                                    setActiveTab("status");
+                                    setAuthStep("");
+                                }}
+                                onStatusChange={(updatedApplication) => {
+
+                                    setSelectedApplication(updatedApplication);
+
+                                    setSubmittedApplications(prev =>
+                                        prev.map(item =>
+                                            item.mobile === updatedApplication.mobile &&
+                                                item.submittedAt === updatedApplication.submittedAt
+                                                ? updatedApplication
+                                                : item
+                                        )
+                                    );
+
+                                }}
                             />
                         ) : (
                             <StatusTrackerScreen
@@ -564,67 +598,73 @@ function StatusTrackerScreen({
 
     return (
         <SafeAreaView style={styles.placeholderSafe}>
-            <View style={styles.statusContainer}>
-                <View style={styles.adminHeader}>
-                    <Text style={styles.placeholderEmoji}>📈</Text>
+            <ImageBackground
+                source={BGImage}
+                style={styles.background}
+                resizeMode="cover"
+            >
+                <View style={styles.statusContainer}>
+                    <View style={styles.adminHeader}>
+                        <Text style={styles.placeholderEmoji}>📈</Text>
 
-                    <Text style={styles.placeholderTitle}>
-                        {t.liveStatusTracker}
-                    </Text>
-                    <Text style={styles.placeholderSub}>
-                        Verified User Mobile: +91 {mobileNumber || 'Not Verified / Guest'}
-                    </Text>
-                </View>
-
-                {hasSubmitted ? (
-                    <ScrollView
-                        contentContainerStyle={{ gap: 12, paddingBottom: 20 }}
-                        showsVerticalScrollIndicator={false}
-                    >
-                        {userSubmissions.map((sub, index) => (
-                            <TouchableOpacity
-                                key={index}
-                                style={styles.statusCard}
-                                activeOpacity={0.8}
-                                onPress={() => {
-                                    setSelectedApplication(sub);
-                                    setAuthStep("application-details");
-                                }}
-                            >
-                                <View style={styles.statusRowTop}>
-                                    <Text style={styles.statusAppId}>
-                                        Application #{1001 + index}
-                                    </Text>
-                                    <View style={styles.statusBadge}>
-                                        <Text style={styles.statusBadgeText}>Under BMM Review</Text>
-                                    </View>
-                                </View>
-                                <Text style={styles.statusDetail}>
-                                    🏦 Bank: {sub.selectedBankName}
-                                </Text>
-
-                                <Text style={styles.statusDetail}>
-                                    💰 Amount: ₹{sub.requiredCapital}
-                                </Text>
-
-                                <Text style={styles.statusDate}>
-                                    📅 Applied On: {sub.submittedAt}
-                                </Text>
-                            </TouchableOpacity>
-                        ))}
-                    </ScrollView>
-                ) : (
-                    <View style={styles.emptyStateBox}>
-                        <Text style={styles.emptyEmoji}>📭</Text>
-                        <Text style={styles.emptyTitle}>No Forms Filled Yet</Text>
-                        <Text style={styles.emptyDesc}>
-                            {mobileNumber
-                                ? `No active Mahila Credit Card applications found for +91 ${mobileNumber}.`
-                                : 'Please complete mobile verification first to view your application status.'}
+                        <Text style={styles.placeholderTitle}>
+                            {t.liveStatusTracker}
+                        </Text>
+                        <Text style={styles.placeholderSub}>
+                            Verified User Mobile: +91 {mobileNumber || 'Not Verified / Guest'}
                         </Text>
                     </View>
-                )}
-            </View>
+
+                    {hasSubmitted ? (
+                        <ScrollView
+                            contentContainerStyle={{ gap: 12, paddingBottom: 20 }}
+                            showsVerticalScrollIndicator={false}
+                        >
+                            {userSubmissions.map((sub, index) => (
+                                <TouchableOpacity
+                                    key={index}
+                                    style={styles.statusCard}
+                                    activeOpacity={0.8}
+                                    onPress={() => {
+                                        setSelectedApplication(sub);
+                                        setAuthStep("application-details");
+                                    }}
+                                >
+                                    <View style={styles.statusRowTop}>
+                                        <Text style={styles.statusAppId}>
+                                            MCCY {1001 + index}
+                                        </Text>
+                                        <Text style={styles.statusBadgeText}>
+                                            {sub.status}
+                                        </Text>
+                                    </View>
+                                    <Text style={styles.statusDetail}>
+                                        🏦 Bank: {sub.selectedBankName}
+                                    </Text>
+
+                                    <Text style={styles.statusDetail}>
+                                        💰 Amount: ₹{sub.requiredCapital}
+                                    </Text>
+
+                                    <Text style={styles.statusDate}>
+                                        📅 Applied On: {sub.submittedAt}
+                                    </Text>
+                                </TouchableOpacity>
+                            ))}
+                        </ScrollView>
+                    ) : (
+                        <View style={styles.emptyStateBox}>
+                            <Text style={styles.emptyEmoji}>📭</Text>
+                            <Text style={styles.emptyTitle}>No Forms Filled Yet</Text>
+                            <Text style={styles.emptyDesc}>
+                                {mobileNumber
+                                    ? `No active Mahila Credit Card applications found for +91 ${mobileNumber}.`
+                                    : 'Please complete mobile verification first to view your application status.'}
+                            </Text>
+                        </View>
+                    )}
+                </View>
+            </ImageBackground>
         </SafeAreaView>
     );
 }
@@ -666,7 +706,7 @@ const styles = StyleSheet.create({
     },
     badgeText: {
         color: '#78350f',
-        fontSize: 12,
+        fontSize: 22,
         fontWeight: '700',
         fontFamily: Platform.OS === 'ios' ? 'Courier' : 'monospace',
     },
@@ -709,7 +749,7 @@ const styles = StyleSheet.create({
         gap: 8,
     },
     sectionHeaderTitle: {
-        fontSize: 12,
+        fontSize: 20,
         fontWeight: '700',
         color: '#78350f',
         textTransform: 'uppercase',
@@ -742,8 +782,8 @@ const styles = StyleSheet.create({
         gap: 8,
     },
     placeholderEmoji: { fontSize: 40, marginBottom: 8 },
-    placeholderTitle: { fontSize: 18, fontWeight: '800', color: '#0f172a' },
-    placeholderSub: { fontSize: 13, color: '#64748b', textAlign: 'center' },
+    placeholderTitle: { fontSize: 20, fontWeight: '800', color: '#0f172a' },
+    placeholderSub: { fontSize: 18, color: '#64748b', textAlign: 'center' },
     emptyStateBox: {
         flex: 1,
         justifyContent: 'center',
@@ -752,9 +792,9 @@ const styles = StyleSheet.create({
         gap: 8,
     },
     emptyEmoji: { fontSize: 48, marginBottom: 4 },
-    emptyTitle: { fontSize: 16, fontWeight: '800', color: '#1e293b' },
+    emptyTitle: { fontSize: 20, fontWeight: '800', color: '#1e293b' },
     emptyDesc: {
-        fontSize: 12,
+        fontSize: 20,
         color: '#64748b',
         textAlign: 'center',
         lineHeight: 18,
@@ -773,7 +813,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 4,
     },
-    statusAppId: { fontSize: 13, fontWeight: '800', color: '#0f172a' },
+    statusAppId: { fontSize: 18, fontWeight: '800', color: '#0f172a' },
     statusBadge: {
         backgroundColor: '#fef3c7',
         borderColor: '#fcd34d',
@@ -782,12 +822,15 @@ const styles = StyleSheet.create({
         paddingVertical: 2,
         borderRadius: 6,
     },
-    statusBadgeText: { fontSize: 10, fontWeight: '700', color: '#b45309' },
+    statusBadgeText: { fontSize: 18, fontWeight: '700', color: '#b45309' },
     statusDetail: { fontSize: 18, color: '#334155' },
     statusDate: {
         fontSize: 18,
         color: '#334155',
         marginTop: 4,
         fontFamily: Platform.OS === 'ios' ? 'Courier' : 'monospace',
+    },
+    background: {
+        flex: 1,
     },
 });

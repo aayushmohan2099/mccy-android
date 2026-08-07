@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     SafeAreaView,
     ScrollView,
@@ -6,14 +6,49 @@ import {
     Text,
     TouchableOpacity,
     StyleSheet,
+    ImageBackground,
 } from "react-native";
+import Button from "../compnents/SharedUIComp/Button";
+import Back1 from '../assets/images/back1.png';
+import BGImage from '../assets/images/bg.png';
+
+const STATUS_FLOW = [
+    "Pending At BMMU",
+    "Pending At DMMU",
+    "Pending At Bank",
+    "Sanctioned / Approved",
+    "Reverted From BMMU",
+    "Reverted To BMMU",
+    "Reverted To DMMU",
+];
 
 export function ApplicationDetailsScreen({
     application,
     onBack,
+    onStatusChange,   // <-- add this
 }) {
     if (!application) return null;
+    const [applicationData, setApplicationData] = useState(application);
+    const handleNextStatus = () => {
+        const currentIndex = STATUS_FLOW.indexOf(applicationData.status);
 
+        // If it reaches the last status, start again from the first
+        const nextIndex =
+            currentIndex === STATUS_FLOW.length - 1
+                ? 0
+                : currentIndex + 1;
+
+        const updatedApplication = {
+            ...applicationData,
+            status: STATUS_FLOW[nextIndex],
+        };
+
+        setApplicationData(updatedApplication);
+
+        if (onStatusChange) {
+            onStatusChange(updatedApplication);
+        }
+    };
     const DetailRow = ({ label, value }) => (
         <View style={styles.row}>
             <Text style={styles.label}>{label}</Text>
@@ -23,94 +58,125 @@ export function ApplicationDetailsScreen({
 
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView
-                contentContainerStyle={styles.content}
-                showsVerticalScrollIndicator={false}
+            <ImageBackground
+                source={BGImage}
+                style={styles.background}
+                resizeMode="cover"
             >
-                <TouchableOpacity
+                <ScrollView
+                    contentContainerStyle={styles.content}
+                    showsVerticalScrollIndicator={false}
+                >
+                    {/* <TouchableOpacity
                     style={styles.backButton}
                     onPress={onBack}
                 >
                     <Text style={styles.backText}>← Back</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
+                    <Button
+                        variant="back"
+                        image={Back1}
+                        onPress={onBack}
+                        style={{
+                            marginTop: 10,
+                            alignSelf: "flex-start",
+                        }}
+                        imageStyle={{
+                            width: 30,
+                            height: 30,
+                        }}
+                    />
 
-                <Text style={styles.title}>
-                    Application Details
-                </Text>
-
-                {/* Personal Details */}
-                <View style={styles.card}>
-                    <Text style={styles.sectionTitle}>
-                        👤 Personal Details
+                    <Text style={styles.title}>
+                        Application Details
                     </Text>
 
-                    <DetailRow label="Name" value={application.memberName} />
-                    <DetailRow label="Mobile" value={application.mobile} />
-                    <DetailRow label="District" value={application.district} />
-                    <DetailRow label="Block" value={application.block} />
-                </View>
+                    {/* Personal Details */}
+                    <View style={styles.card}>
+                        <Text style={styles.sectionTitle}>
+                            👤 Personal Details
+                        </Text>
 
-                {/* Enterprise */}
-                <View style={styles.card}>
-                    <Text style={styles.sectionTitle}>
-                        🏢 Enterprise Details
-                    </Text>
+                        <DetailRow
+                            label="Status"
+                            value={applicationData.status}
+                        />
+                        <DetailRow label="Mobile" value={applicationData.mobile} />
+                        <DetailRow label="District" value={applicationData.district} />
+                        <DetailRow label="Block" value={applicationData.block} />
+                    </View>
 
-                    <DetailRow
-                        label="Enterprise"
-                        value={application.enterpriseName}
+                    {/* Enterprise */}
+                    <View style={styles.card}>
+                        <Text style={styles.sectionTitle}>
+                            🏢 Enterprise Details
+                        </Text>
+
+                        <DetailRow
+                            label="Enterprise"
+                            value={applicationData.enterpriseName}
+                        />
+
+                        <DetailRow
+                            label="Loan Amount"
+                            value={`₹${applicationData.requiredCapital}`}
+                        />
+                    </View>
+
+                    {/* Bank */}
+                    <View style={styles.card}>
+                        <Text style={styles.sectionTitle}>
+                            🏦 Bank Details
+                        </Text>
+
+                        <DetailRow
+                            label="Bank Name"
+                            value={applicationData.selectedBankName}
+                        />
+
+                        <DetailRow
+                            label="Branch"
+                            value={applicationData.branchName}
+                        />
+
+                        <DetailRow
+                            label="Account Number"
+                            value={applicationData.accountNumber}
+                        />
+
+                        <DetailRow
+                            label="IFSC"
+                            value={applicationData.ifscCode}
+                        />
+                    </View>
+
+                    {/* Status */}
+                    <View style={styles.card}>
+                        <Text style={styles.sectionTitle}>
+                            📋 Application Status
+                        </Text>
+
+                        <DetailRow
+                            label="Status"
+                            value={applicationData.status}
+                        />
+
+                        <DetailRow
+                            label="Applied On"
+                            value={applicationData.submittedAt}
+                        />
+                    </View>
+                    <Button
+                        title="Next Status"
+                        variant="primary"
+                        onPress={handleNextStatus}
+                        style={{
+                            marginTop: 20,
+                            marginBottom: 30,
+                        }}
                     />
-
-                    <DetailRow
-                        label="Loan Amount"
-                        value={`₹${application.requiredCapital}`}
-                    />
-                </View>
-
-                {/* Bank */}
-                <View style={styles.card}>
-                    <Text style={styles.sectionTitle}>
-                        🏦 Bank Details
-                    </Text>
-
-                    <DetailRow
-                        label="Bank Name"
-                        value={application.selectedBankName}
-                    />
-
-                    <DetailRow
-                        label="Branch"
-                        value={application.branchName}
-                    />
-
-                    <DetailRow
-                        label="Account Number"
-                        value={application.accountNumber}
-                    />
-
-                    <DetailRow
-                        label="IFSC"
-                        value={application.ifscCode}
-                    />
-                </View>
-
-                {/* Status */}
-                <View style={styles.card}>
-                    <Text style={styles.sectionTitle}>
-                        📋 Application Status
-                    </Text>
-
-                    <DetailRow
-                        label="Status"
-                        value={application.status}
-                    />
-
-                    <DetailRow
-                        label="Applied On"
-                        value={application.submittedAt}
-                    />
-                </View>
-            </ScrollView>
+                </ScrollView>
+            </ImageBackground>
         </SafeAreaView>
     );
 }
@@ -186,5 +252,8 @@ const styles = StyleSheet.create({
         color: "#0f172a",
         fontWeight: "500",
         marginLeft: 10,
+    },
+    background: {
+        flex: 1,
     },
 });
