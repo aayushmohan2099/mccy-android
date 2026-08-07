@@ -146,7 +146,12 @@ export function BankDetailsSection({
                     />
 
                     {showSuggestions && bankSearch.length > 0 && (
-                        <ScrollView style={styles.searchList}>
+                        <ScrollView
+                            style={styles.searchList}
+                            nestedScrollEnabled={true}
+                            keyboardShouldPersistTaps="handled"
+                            showsVerticalScrollIndicator={true}
+                        >
                             {filteredBanks.map((bank) => (
                                 <TouchableOpacity
                                     key={bank.id}

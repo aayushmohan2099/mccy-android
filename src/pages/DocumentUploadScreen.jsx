@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platfor
 import { SafeAreaView } from "react-native-safe-area-context";
 import { pick, types, isErrorWithCode } from "@react-native-documents/picker";
 import { CustomButton } from "../compnents/SharedUIComp/CustomButton";
+import Button from "../compnents/SharedUIComp/Button";
+import Back1 from '../assets/images/back1.png';
 
 const translations = {
     en: {
@@ -203,10 +205,23 @@ export function DocumentUploadScreen({
                     {/* Top Bar with Back Button & Stage Badge */}
                     <View style={styles.topBarRow}>
                         {onBackToForm && (
-                            <TouchableOpacity onPress={onBackToForm} activeOpacity={0.7} style={styles.backButtonContainer}>
-                                <Text style={styles.backArrowSymbol}>←</Text>
-                                <Text style={styles.backButtonText}>{t.back}</Text>
-                            </TouchableOpacity>
+                            // <TouchableOpacity onPress={onBackToForm} activeOpacity={0.7} style={styles.backButtonContainer}>
+                            //     <Text style={styles.backArrowSymbol}>←</Text>
+                            //     <Text style={styles.backButtonText}>{t.back}</Text>
+                            // </TouchableOpacity>
+                            <Button
+                                variant="back"
+                                image={Back1}
+                                onPress={onBackToForm}
+                                style={{
+                                    marginTop: 10,
+                                    alignSelf: "flex-start",
+                                }}
+                                imageStyle={{
+                                    width: 30,
+                                    height: 30,
+                                }}
+                            />
                         )}
                     </View>
 
