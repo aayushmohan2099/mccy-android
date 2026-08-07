@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { CustomInput } from "../../compnents/SharedUIComp/CustomInput";
+
+
 
 
 
@@ -99,6 +102,16 @@ export function PersonalDetailsSection({
     language = "en"
 }) {
     const t = translations[language] || translations.en;
+    const [showDobPicker, setShowDobPicker] = useState(false);
+    const [showJoiningPicker, setShowJoiningPicker] = useState(false);
+
+    const formatDate = (date) => {
+        const day = String(date.getDate()).padStart(2, "0");
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const year = date.getFullYear();
+
+        return `${day}/${month}/${year}`;
+    };
     return (
 
         <View style={styles.stepContainer}>
@@ -142,27 +155,45 @@ export function PersonalDetailsSection({
 
             <View style={styles.row}>
                 <View style={styles.flex1}>
-                    <CustomInput
-                        label={t.dob}
-                        value={formData.dob}
-                        onChangeText={(text) => {
-                            let value = text.replace(/\D/g, "");
+                    <View style={styles.flex1}>
 
-                            if (value.length > 2) {
-                                value = value.slice(0, 2) + "/" + value.slice(2);
-                            }
+                        <TouchableOpacity
+                            activeOpacity={0.8}
+                            onPress={() => setShowDobPicker(true)}
+                        >
 
-                            if (value.length > 5) {
-                                value = value.slice(0, 5) + "/" + value.slice(5);
-                            }
+                            <CustomInput
+                                label={t.dob}
+                                value={formData.dob}
+                                placeholder="DD/MM/YYYY"
+                                editable={false}
+                            />
 
-                            value = value.slice(0, 10);
+                        </TouchableOpacity>
 
-                            onChange("dob", value);
-                        }}
-                        placeholder="DD/MM/YYYY"
-                        keyboardType="numeric"
-                    />
+                        {showDobPicker && (
+
+                            <DateTimePicker
+                                value={new Date()}
+                                mode="date"
+                                display="default"
+                                maximumDate={new Date()}
+                                onChange={(event, selectedDate) => {
+
+                                    setShowDobPicker(false);
+
+                                    if (selectedDate) {
+
+                                        onChange("dob", formatDate(selectedDate));
+
+                                    }
+
+                                }}
+                            />
+
+                        )}
+
+                    </View>
                 </View>
                 <View style={styles.flex1}>
                     <CustomInput
@@ -192,28 +223,48 @@ export function PersonalDetailsSection({
                 </View>
             </View>
 
-            <CustomInput
-                label={t.joiningDate}
-                value={formData.shgJoiningDate}
-                onChangeText={(text) => {
-                    let value = text.replace(/\D/g, "");
+            <View>
 
-                    if (value.length > 2) {
-                        value = value.slice(0, 2) + "/" + value.slice(2);
-                    }
+                <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => setShowJoiningPicker(true)}
+                >
 
-                    if (value.length > 5) {
-                        value = value.slice(0, 5) + "/" + value.slice(5);
-                    }
+                    <CustomInput
+                        label={t.joiningDate}
+                        value={formData.shgJoiningDate}
+                        placeholder="DD/MM/YYYY"
+                        editable={false}
+                    />
 
-                    value = value.slice(0, 10);
+                </TouchableOpacity>
 
-                    onChange("shgJoiningDate", value);
-                }}
-                placeholder="DD/MM/YYYY"
-                keyboardType="numeric"
-                maxLength={10}
-            />
+                {showJoiningPicker && (
+
+                    <DateTimePicker
+                        value={new Date()}
+                        mode="date"
+                        display="default"
+                        maximumDate={new Date()}
+                        onChange={(event, selectedDate) => {
+
+                            setShowJoiningPicker(false);
+
+                            if (selectedDate) {
+
+                                onChange(
+                                    "shgJoiningDate",
+                                    formatDate(selectedDate)
+                                );
+
+                            }
+
+                        }}
+                    />
+
+                )}
+
+            </View>
 
             <View style={styles.inputGroup}>
                 <Text style={styles.label}>{t.socialCategory}</Text>
