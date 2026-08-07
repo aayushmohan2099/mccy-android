@@ -281,7 +281,11 @@ export function OtpVerifyScreen({
                   title={t.verifyLogin}
                   image={LoginIcon}
                   onPress={handleVerify}
-                  style={{ marginBottom: 14, width: "90%" }}
+                  style={{
+                    marginBottom: 10,
+                    width: "90%",
+                    alignSelf: "center",
+                  }}
                 />
                 {/* <TouchableOpacity
                   onPress={onBackToMobile}
@@ -297,7 +301,7 @@ export function OtpVerifyScreen({
                   onPress={onBackToMobile}
                   style={{
                     marginTop: 10,
-
+                    alignSelf: "center",
                   }}
                 />
 
@@ -415,7 +419,8 @@ const styles = StyleSheet.create({
   },
   cardContent: {
     width: '100%',
-    gap: 20, // Increase to 25 or 30 if you want more space
+    gap: 20,
+    alignItems: 'center',
   },
   otpContainer: { flexDirection: 'row', justifyContent: 'center', gap: 12 },
   otpInput: {
@@ -448,6 +453,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    width: '100%',   // <-- Add this line
     paddingTop: 4,
   },
   resendLabel: { fontSize: 15, color: '#64748b' },

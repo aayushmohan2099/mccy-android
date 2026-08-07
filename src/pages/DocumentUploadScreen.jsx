@@ -24,7 +24,8 @@ const translations = {
         attached: "Attached",
 
         identity: "1. Identity Proof & PAN Proof",
-        income: "2. Income Proof / Self Declaration",
+        // income: "2. Income Proof / Self Declaration",
+        income: "2. Income Proof",
         vo: "3. VO Verification Copy",
         clf: "4. CLF Verification Copy",
 
@@ -52,7 +53,8 @@ const translations = {
         attached: "संलग्न",
 
         identity: "1. पहचान प्रमाण एवं पैन",
-        income: "2. आय प्रमाण / स्वघोषणा",
+        // income: "2. आय प्रमाण / स्वघोषणा",
+        income: "2. आय प्रमाण ",
         vo: "3. VO सत्यापन प्रति",
         clf: "4. CLF सत्यापन प्रति",
 
@@ -160,7 +162,7 @@ export function DocumentUploadScreen({
                     <View style={styles.docTitleGroup}>
                         <Text style={styles.docEmoji}>📄</Text>
                         <Text style={styles.docTitle}>{title}</Text>
-                        <Text style={styles.mandatoryTag}>{t.mandatory}</Text>
+                        <Text style={styles.mandatoryTag}>*</Text>
                     </View>
                     {badgeText ? (
                         <View style={badgeStyle}>
