@@ -455,6 +455,7 @@ export default function DefaultPage({ language }) {
 
             {authStep !== 'mobile' && authStep !== 'otp' && (
                 <BottomNav
+                    language={language}
                     activeTab={activeTab}
                     setActiveTab={setActiveTab}
                     onLogout={handleLogout}
