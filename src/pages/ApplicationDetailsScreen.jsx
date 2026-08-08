@@ -167,7 +167,7 @@ export function ApplicationDetailsScreen({
                         />
                     </View>
                     <Button
-                        title="Next Status"
+                        title="Refresh"
                         variant="primary"
                         onPress={handleNextStatus}
                         style={{

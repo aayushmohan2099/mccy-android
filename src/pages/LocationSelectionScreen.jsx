@@ -31,7 +31,7 @@ const LOCATION_HIERARCHY = [
     {
         district: "Lucknow",
         blocks: [
-            { name: "Gosaingang", panchayats: ["Beli", "Jajuar", "Kalyanpur", "Bela"] },
+            { name: "Gosainganj", panchayats: ["Beli", "Jajuar", "Kalyanpur", "Bela"] },
             { name: "Bochaha", panchayats: ["Aima", "Dahila", "Garha", "Rahuan"] },
             { name: "Kanti", panchayats: ["Patahi", "Marwan", "Kalwari", "Akhtar"] }
         ]

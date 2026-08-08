@@ -26,8 +26,8 @@ const translations = {
         loanPurpose: "Purpose of Loan",
         loanPurposePlaceholder: "Enter specific loan requirement purpose",
 
-        capital: "Required Capital (Maximum INR 20,000) (₹)",
-        capitalPlaceholder: "Max 20000",
+        capital: "Required Capital(₹)",
+        // capitalPlaceholder: "Max 20000",
 
         workPlace: "Place Where Work Will Be Carried Out",
         salesChannel: "Where Will You Sell Your Products / Services?",
@@ -73,8 +73,8 @@ const translations = {
         loanPurpose: "ऋण का उद्देश्य",
         loanPurposePlaceholder: "ऋण लेने का उद्देश्य दर्ज करें",
 
-        capital: "आवश्यक पूंजी (अधिकतम ₹20,000)",
-        capitalPlaceholder: "अधिकतम 20000",
+        capital: "आवश्यक पूंजी",
+        // capitalPlaceholder: "अधिकतम 20000",
 
         workPlace: "कार्य कहाँ किया जाएगा",
         salesChannel: "आप अपने उत्पाद/सेवाएँ कहाँ बेचेंगे?",
@@ -217,7 +217,7 @@ export function LoanEnterpriseDetailsSection({
                 onChangeText={(val) => onChange("requiredCapital", val.replace(/\D/g, ""))}
                 placeholder={t.capitalPlaceholder}
                 keyboardType="numeric"
-                maxLength={5}
+                maxLength={9}
             />
 
             <View style={styles.inputGroup}>

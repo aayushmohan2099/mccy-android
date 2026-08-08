@@ -457,7 +457,17 @@ const styles = StyleSheet.create({
     successIcon: { fontSize: 14 },
     successText: { color: "#065f46", fontSize: 12 },
     formCard: { backgroundColor: "#ffffff", padding: 16, borderRadius: 16, borderColor: "#e2e8f0", borderWidth: 1 },
-    footerNav: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", padding: 16, paddingBottom: Platform.OS === "ios" ? 24 : 16, backgroundColor: "#ffffff", borderTopWidth: 1, borderTopColor: "#e2e8f0" },
+    footerNav: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: 16,
+        paddingBottom: Platform.OS === "ios" ? 24 : 16,
+        backgroundColor: "#ffffff",
+        borderTopWidth: 1,
+        borderTopColor: "#e2e8f0",
+        // marginBottom: 0
+    },
     btnPrev: { paddingHorizontal: 16, paddingVertical: 12, backgroundColor: "#e2e8f0", borderRadius: 10 },
     btnPrevText: { fontSize: 12, fontWeight: "700", color: "#334155" },
     customPrevBtn: {
