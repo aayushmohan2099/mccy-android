@@ -134,7 +134,7 @@ export function ApplicationFormScreen({
         salesChannel: initialDraft?.salesChannel || "In the Local Village",
         udhyamRegNum: initialDraft?.udhyamRegNum || "",
 
-        selectedBankName: initialDraft?.selectedBankName || "State Bank of India",
+        selectedBankName: initialDraft?.selectedBankName || "",
         branchName: initialDraft?.branchName || "",
         accountNumber: initialDraft?.accountNumber || "",
         ifscCode: initialDraft?.ifscCode || "SBIN0001234",
@@ -204,7 +204,7 @@ export function ApplicationFormScreen({
                             workPlace: "From Home",
                             salesChannel: "In the Local Village",
                             udhyamRegNum: "",
-                            selectedBankName: "State Bank of India",
+                            selectedBankName: "",
                             branchName: "",
                             accountNumber: "",
                             ifscCode: "SBIN0001234",

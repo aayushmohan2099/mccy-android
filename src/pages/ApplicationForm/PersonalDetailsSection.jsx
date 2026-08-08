@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { CustomInput } from "../../compnents/SharedUIComp/CustomInput";
+import { User } from "lucide-react-native";
 
 
 
@@ -124,7 +125,12 @@ export function PersonalDetailsSection({
                     </TouchableOpacity>
                 )}
                 <View style={styles.stepHeader}>
-                    <Text style={styles.stepHeaderIcon}>👤</Text>
+                    {/* <Text style={styles.stepHeaderIcon}>👤</Text> */}
+                    <User
+                        size={30}
+                        color="#000"
+                        strokeWidth={2}
+                    />
                     <Text style={styles.stepHeaderText}>{t.personalDetails}</Text>
                 </View>
             </View>

@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Platform } from "react-native";
 import { CustomInput } from "../../compnents/SharedUIComp/CustomInput";
+import { WalletCards } from "lucide-react-native";
 
 const translations = {
     en: {
@@ -126,7 +127,12 @@ export function LoanEnterpriseDetailsSection({
     return (
         <View style={styles.stepContainer}>
             <View style={styles.stepHeader}>
-                <Text style={styles.stepHeaderIcon}>💼</Text>
+                {/* <Text style={styles.stepHeaderIcon}>💼</Text> */}
+                <WalletCards
+                    size={30}
+                    color="#000000"
+                    strokeWidth={2}
+                />
                 <Text style={styles.stepHeaderText}>
                     {t.header}
                 </Text>

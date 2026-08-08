@@ -8,6 +8,7 @@ import {
     StyleSheet,
 } from "react-native";
 import { CustomInput } from "../../compnents/SharedUIComp/CustomInput";
+import { Landmark } from "lucide-react-native";
 
 
 
@@ -127,7 +128,11 @@ export function BankDetailsSection({
     return (
         <View style={styles.stepContainer}>
             <View style={styles.stepHeader}>
-                <Text style={styles.stepHeaderIcon}>🏦</Text>
+                <Landmark
+                    size={30}
+                    color="#000000"
+                    strokeWidth={2}
+                />
                 <Text style={styles.stepHeaderText}>{t.header}</Text>
             </View>
 

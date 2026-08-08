@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { CustomInput } from "../../compnents/SharedUIComp/CustomInput";
+import { Building2 } from "lucide-react-native";
 
 const translations = {
     en: {
@@ -29,7 +30,12 @@ export function VoClfDetailsSection({
     return (
         <View style={styles.stepContainer}>
             <View style={styles.stepHeader}>
-                <Text style={styles.stepHeaderIcon}>🏢</Text>
+                {/* <Text style={styles.stepHeaderIcon}>🏢</Text> */}
+                <Building2
+                    size={30}
+                    color="#000000"
+                    strokeWidth={2}
+                />
                 <Text style={styles.stepHeaderText}>
                     {t.header}
                 </Text>
