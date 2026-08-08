@@ -48,7 +48,7 @@ const PANCHAYAT_SHG_MAPPING = {
 
 const DEFAULT_SHG_LIST = [
     {
-        shgName: "Amethi Khurd",
+        shgName: "Beli",
         shgId: "SHG-88291",
         members: ["Applicant (Self Entry)", "Sita Devi", "Anamika Roy"]
     }

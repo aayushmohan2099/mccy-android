@@ -25,6 +25,7 @@ import { User } from "lucide-react-native";
 import { Building2 } from "lucide-react-native";
 import { WalletCards } from "lucide-react-native";
 import { Landmark } from "lucide-react-native";
+import Card from "../compnents/SharedUIComp/Card";
 
 
 const translations = {
@@ -235,48 +236,47 @@ export function ApplicationFormScreen({
                 <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
 
                     {/* Header Area */}
-                    {/* Title */}
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.headerTitle}>
+                    <Card style={styles.headerCard}>
+                        {/* Title */}
+                        <Text style={styles.title}>
                             {t.title}
                         </Text>
-                    </View>
 
-                    {/* Save / Delete */}
-                    <View style={styles.actionContainer}>
-                        <Button
-                            variant="imageAction"
-                            title={t.saveDraft}
-                            image={PencilIcon}
-                            onPress={handleSaveDraftClick}
-                            disabled={isLoading}
-                            style={{
-                                marginBottom: 12,
-                                width: 180
-                            }}
-                            imageStyle={{
-                                width: 50,
-                                height: 50,
-                            }}
-                        />
+                        {/* Save / Delete */}
+                        <View style={styles.headerButtons}>
+                            <Button
+                                variant="imageAction"
+                                title={t.saveDraft}
+                                image={PencilIcon}
+                                onPress={handleSaveDraftClick}
+                                disabled={isLoading}
+                                style={{
+                                    marginBottom: 10,
+                                    width: 170,
+                                }}
+                                imageStyle={{
+                                    width: 50,
+                                    height: 50,
+                                }}
+                            />
 
-                        <Button
-                            variant="imageAction"
-                            title={t.startFresh}
-                            image={RefreshIcon}
-                            onPress={handleSaveDraftClick}
-                            disabled={isLoading}
-                            style={{
-                                marginBottom: 12,
-                                width: 180,
-                            }}
-                            imageStyle={{
-                                width: 50,
-                                height: 50,
-                            }}
-                        />
-
-                    </View>
+                            <Button
+                                variant="imageAction"
+                                title={t.startFresh}
+                                image={RefreshIcon}
+                                onPress={handleSaveDraftClick}
+                                disabled={isLoading}
+                                style={{
+                                    marginBottom: 10,
+                                    width: 170,
+                                }}
+                                imageStyle={{
+                                    width: 50,
+                                    height: 50,
+                                }}
+                            />
+                        </View>
+                    </Card>
 
                     {/* Step Wizard Header */}
                     <View style={styles.wizardContainer}>
@@ -498,5 +498,22 @@ const styles = StyleSheet.create({
 
     customNextBtn: {
         width: "50%",
+    },
+    headerCard: {
+        marginBottom: 20,
+    },
+
+    title: {
+        fontSize: 32,
+        fontWeight: '800',
+        color: '#0f172a',
+        textAlign: 'center',
+        marginBottom: 30,
+    },
+
+    headerButtons: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        gap: 12,
     },
 });

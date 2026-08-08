@@ -215,6 +215,8 @@ const styles = StyleSheet.create({
         borderTopColor: "#1e293b",
         paddingHorizontal: 8,
         paddingVertical: 8,
+        marginTop: 0,
+        marginBottom: 0,
     },
 
     navRow: {

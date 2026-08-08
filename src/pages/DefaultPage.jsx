@@ -136,6 +136,8 @@ const translations = {
     },
 };
 
+// const FONT_FAMILY = 'NotoSansDevanagari';
+
 export default function DefaultPage({ language }) {
 
     const [activeTab, setActiveTab] = useState('register');
@@ -721,11 +723,20 @@ const styles = StyleSheet.create({
         color: '#0f172a',
         textAlign: 'center',
     },
+    // adminSubtitle: {
+    //     fontSize: 20,
+    //     color: '#475569',
+    //     textAlign: 'center',
+    //     lineHeight: 18,
+    // },
     adminSubtitle: {
         fontSize: 20,
         color: '#475569',
         textAlign: 'center',
         lineHeight: 18,
+        marginTop: 10,
+        // fontFamily: 'NotoSansDevanagari-Bold',
+
     },
     portalCardsList: { gap: 12 },
     portalCard: {
