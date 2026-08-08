@@ -453,12 +453,14 @@ export default function DefaultPage({ language }) {
                 </ImageBackground>
             </View>
 
-            <BottomNav
-                activeTab={activeTab}
-                setActiveTab={setActiveTab}
-                onLogout={handleLogout}
-                onViewDrafts={handleViewDraftsFromNav}
-            />
+            {authStep !== 'mobile' && authStep !== 'otp' && (
+                <BottomNav
+                    activeTab={activeTab}
+                    setActiveTab={setActiveTab}
+                    onLogout={handleLogout}
+                    onViewDrafts={handleViewDraftsFromNav}
+                />
+            )}
         </View>
     );
 }

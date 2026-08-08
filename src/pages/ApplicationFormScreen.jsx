@@ -30,7 +30,7 @@ import { Landmark } from "lucide-react-native";
 const translations = {
     en: {
         back: "Back",
-        title: "Mahila Credit Card Yojna",
+        title: "Loan Application Form",
 
         saveDraft: "Draft",
         startFresh: "Reset",
@@ -60,10 +60,13 @@ const translations = {
 
     hi: {
         back: "वापस",
-        title: "महिला क्रेडिट कार्ड योजना",
+        title: "ऋण आवेदन फॉर्म",
 
-        saveDraft: "ड्राफ्ट सहेजें",
-        startFresh: "नया प्रारम्भ करें",
+        // saveDraft: "ड्राफ्ट सहेजें",
+        // startFresh: "नया प्रारम्भ करें",
+
+        saveDraft: "ड्राफ्ट",
+        startFresh: "रीसेट",
 
         personal: "व्यक्तिगत",
         voClf: "वीओ / सीएलएफ",
@@ -427,13 +430,25 @@ const styles = StyleSheet.create({
     deleteDraftButton: { flexDirection: "row", alignItems: "center", gap: 4, backgroundColor: "#fff1f2", borderColor: "#fecdd3", borderWidth: 1, paddingHorizontal: 8, paddingVertical: 6, borderRadius: 8 },
     deleteDraftIcon: { fontSize: 15 },
     deleteDraftText: { fontSize: 15, fontWeight: "600", color: "#9f1239" },
-    wizardContainer: { flexDirection: "row", backgroundColor: "#ffffff", padding: 6, borderRadius: 12, borderColor: "#e2e8f0", borderWidth: 1, justifyContent: "space-between" },
+    wizardContainer: {
+        flexDirection: "row",
+        backgroundColor: "#ffffff",
+        paddingVertical: 10,
+        paddingHorizontal: 6,
+        borderRadius: 16,
+        borderColor: "#e2e8f0",
+        borderWidth: 1,
+        alignItems: "stretch",
+    },
+
     wizardTab: {
         flex: 1,
-        paddingVertical: 10,
-        marginHorizontal: 4,   // <-- add this
+        minWidth: 0,
         alignItems: "center",
-        borderRadius: 8,
+        justifyContent: "center",
+        paddingVertical: 10,
+        paddingHorizontal: 4,
+        borderRadius: 12,
     },
     wizardTabActive: { backgroundColor: "#f59e0b" },
     wizardTabText: { fontSize: 15, fontWeight: "700", color: "#64748b" },
@@ -449,10 +464,10 @@ const styles = StyleSheet.create({
         width: "40%",
     },
     stepRow: {
-        flexDirection: "row",
+        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        gap: 8,
+        gap: 6,
     },
 
     stepCircle: {
