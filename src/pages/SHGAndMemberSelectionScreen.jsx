@@ -250,7 +250,11 @@ export function SHGAndMemberSelectionScreen({
                 <CustomButton
                     title={t.proceed}
                     onPress={handleNext}
-                    rightArrow={true}
+                    rightArrow
+                    style={{
+                        width: "90%",
+                        alignSelf: "center",
+                    }}
                 />
             </View>
         </SafeAreaView>
@@ -283,5 +287,5 @@ const styles = StyleSheet.create({
     summaryBox: { backgroundColor: "#fffbeb", borderColor: "#fde68a", borderWidth: 1, padding: 12, borderRadius: 12, gap: 4 },
     summaryTitle: { fontSize: 17, fontWeight: "700", color: "#451a03", textTransform: "uppercase" },
     summaryText: { fontSize: 17, fontWeight: "600", color: "#92400e" },
-    footerContainer: { padding: 16, backgroundColor: "#ffffff", borderTopWidth: 1, borderTopColor: "#e2e8f0" }
+    footerContainer: { padding: 16, backgroundColor: "#ffffff", borderTopWidth: 1, borderTopColor: "#e2e8f0", margin: -20 }
 });

@@ -169,12 +169,23 @@ export function ProfileConfirmationScreen({
 
             {/* Footer Confirm Button */}
             <View style={styles.footerContainer}>
-                <CustomButton
+                {/* <CustomButton
                     title={t.confirm}
                     onPress={handleConfirm}
                     isLoading={isLoading}
                     loadingText={t.creating}
                     rightArrow={true}
+                /> */}
+                <CustomButton
+                    title={t.confirm}
+                    onPress={handleConfirm}
+                    isLoading={isLoading}
+                    loadingText={t.creating}
+                    rightArrow
+                    style={{
+                        width: "90%",
+                        alignSelf: "center",
+                    }}
                 />
             </View>
         </SafeAreaView>
@@ -204,5 +215,5 @@ const styles = StyleSheet.create({
     boldText: { fontWeight: "800", color: "#059669" },
     infoBanner: { backgroundColor: "#fffbeb", borderColor: "#fde68a", borderWidth: 1, padding: 12, borderRadius: 12 },
     infoBannerText: { fontSize: 11, color: "#78350f", lineHeight: 16 },
-    footerContainer: { padding: 16, backgroundColor: "#ffffff", borderTopWidth: 1, borderTopColor: "#e2e8f0" }
+    footerContainer: { padding: 16, backgroundColor: "#ffffff", borderTopWidth: 1, borderTopColor: "#e2e8f0", margin: -20 }
 });

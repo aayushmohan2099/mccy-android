@@ -399,7 +399,7 @@ export function ApplicationFormScreen({
 
 const styles = StyleSheet.create({
     safeArea: { flex: 1 },
-    container: { flex: 1 },
+    container: { flex: 1, marginBottom: -20 },
     scrollContent: { padding: 16, paddingBottom: 40, gap: 16 },
     titleContainer: {
         marginTop: 10,
@@ -424,12 +424,7 @@ const styles = StyleSheet.create({
     badge: { backgroundColor: "#fef3c7", borderColor: "#fcd34d", borderWidth: 1, paddingHorizontal: 8, paddingVertical: 4, borderRadius: 6 },
     badgeText: { color: "#78350f", fontSize: 12, fontWeight: "700", fontFamily: Platform.OS === "ios" ? "Courier" : "monospace" },
     // headerTitle: { fontSize: 20, fontWeight: "600", color: "#64748b", textTransform: "uppercase" },
-    saveDraftButton: { flexDirection: "row", alignItems: "center", gap: 4, backgroundColor: "#ecfdf5", borderColor: "#6ee7b7", borderWidth: 1, paddingHorizontal: 8, paddingVertical: 6, borderRadius: 8 },
-    saveDraftIcon: { fontSize: 15 },
-    saveDraftText: { fontSize: 15, fontWeight: "600", color: "#047857" },
-    deleteDraftButton: { flexDirection: "row", alignItems: "center", gap: 4, backgroundColor: "#fff1f2", borderColor: "#fecdd3", borderWidth: 1, paddingHorizontal: 8, paddingVertical: 6, borderRadius: 8 },
-    deleteDraftIcon: { fontSize: 15 },
-    deleteDraftText: { fontSize: 15, fontWeight: "600", color: "#9f1239" },
+
     wizardContainer: {
         flexDirection: "row",
         backgroundColor: "#ffffff",
@@ -466,7 +461,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#ffffff",
         borderTopWidth: 1,
         borderTopColor: "#e2e8f0",
-        // marginBottom: 0
     },
     btnPrev: { paddingHorizontal: 16, paddingVertical: 12, backgroundColor: "#e2e8f0", borderRadius: 10 },
     btnPrevText: { fontSize: 12, fontWeight: "700", color: "#334155" },
